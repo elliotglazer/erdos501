@@ -1,0 +1,39 @@
+# Erdős Problem #501 — Lean 4 formalization
+#
+#   * Erdos501   : the mathematical development (closed case, Hechler's CH
+#                  counterexample, ZFC core of the random-reals argument,
+#                  first-order rendering of the problem, forcing modules)
+#   * Flypitch4  : vendored Lean 4 port of Flypitch (Han–van Doorn) —
+#                  first-order logic, ZFC, Boolean-valued models, forcing —
+#                  plus the measure/random-algebra additions made for #501
+#   * Challenge  : trusted statements for the comparator (sorried)
+#   * Solution   : the same statements, proved by delegation to Erdos501
+#
+# The comparator (https://github.com/leanprover/comparator) is driven by
+# config.json (full challenge) / config-zfc.json (subset provable today).
+
+name = "erdos501"
+version = "0.1.0"
+defaultTargets = ["Flypitch4", "Erdos501", "Challenge", "Solution"]
+
+[[require]]
+name = "mathlib"
+git = "https://github.com/leanprover-community/mathlib4.git"
+rev = "355bc1e0ed1d36e49525121e1a280ca13a058a92"
+
+# The Flypitch port predates the autoImplicit=false convention; keep Lean's
+# default there and be strict everywhere else.
+[[lean_lib]]
+name = "Flypitch4"
+
+[[lean_lib]]
+name = "Erdos501"
+leanOptions = { autoImplicit = false }
+
+[[lean_lib]]
+name = "Challenge"
+leanOptions = { autoImplicit = false }
+
+[[lean_lib]]
+name = "Solution"
+leanOptions = { autoImplicit = false }

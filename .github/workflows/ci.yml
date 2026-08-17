@@ -1,0 +1,82 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: lake build + axiom audit
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build (Mathlib from cache, everything else from source)
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          use-mathlib-cache: true
+          build: true
+          test: false
+          lint: false
+
+      - name: Axiom audit of the comparator targets
+        run: lake env lean validation/AxiomAudit.lean | tee axioms.txt
+
+      - name: Fail if a target listed in config-zfc.json still depends on sorryAx
+        run: |
+          python3 - <<'EOF'
+          import json, re, sys
+          txt = open("axioms.txt").read()
+          closed = json.load(open("config-zfc.json"))["theorem_names"]
+          bad = []
+          for name in closed:
+              m = re.search(r"'%s' depends on axioms: \[([^\]]*)\]" % re.escape(name), txt)
+              if not m:
+                  bad.append((name, "not found in audit output"))
+              elif "sorryAx" in m.group(1):
+                  bad.append((name, m.group(1)))
+          for b in bad:
+              print("NOT CLOSED:", *b)
+          sys.exit(1 if bad else 0)
+          EOF
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: axiom-audit
+          path: axioms.txt
+
+  comparator:
+    name: comparator (config-zfc.json)
+    runs-on: ubuntu-latest
+    needs: build
+    # The comparator needs landrun (Landlock) — fine on GitHub's Ubuntu runners.
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build project (populates .lake so comparator only rebuilds Challenge/Solution)
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: false
+          use-mathlib-cache: true
+          build: true
+          test: false
+          lint: false
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.22'
+
+      - name: Install landrun, lean4export, comparator
+        run: |
+          scripts/install-comparator-tools.sh "$GITHUB_WORKSPACE/.tools"
+          echo "$GITHUB_WORKSPACE/.tools/bin" >> "$GITHUB_PATH"
+
+      - name: Judge the targets that are provable today
+        run: NO_SYSTEMD=1 scripts/run-comparator.sh config-zfc.json
+
+      - name: Judge the full challenge (allowed to fail until the independence proof is closed)
+        continue-on-error: true
+        run: NO_SYSTEMD=1 scripts/run-comparator.sh config.json

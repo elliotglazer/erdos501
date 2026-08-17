@@ -1,0 +1,123 @@
+#+TITLE: Flypitch (Lean 4)
+*** A formal proof of the independence of the continuum hypothesis
+In this repository we give a formal proof of the [[https://en.wikipedia.org/wiki/Continuum_hypothesis#Independence_from_ZFC][independence of the continuum hypothesis]], completing the original objective of the Flypitch project.
+
+---
+
+Now ported to Lean4, mostly unattended, over the course of a week.
+
+# Please note this ported was automated by Claude Opus 4.7.
+
+See [[flypitch4/VALIDATION.md][VALIDATION.md]] and [[flypitch4/VALIDATION2.md][VALIDATION2.md]] for details.
+
+---
+
+The formal statement of the independence of the continuum hypothesis is given in [[src/summary.lean]]:
+#+begin_src lean
+theorem independence_of_CH : independent ZFC CH_f
+#+end_src
+
+- The definition of ~independent~ states that a sentence is neither provable nor disprovable from a theory:
+  #+begin_src lean
+  def independent {L : Language} (T : Theory L) (f : sentence L) : Prop :=
+  ¬ T ⊢' f ∧ ¬ T ⊢' ∼f
+  #+end_src
+
+  The notation ~T ⊢' f~ means that there is a proof tree of ~f~ with assumptions in ~T~. The proof system is given in [[src/fol.lean]].
+
+- ZFC is the first-order theory of Zermelo-Fraenkel set theory plus choice, defined in [[src/ZFC.lean]].
+  - We formulate it in a language with five constant/function symbols, plus ~∈~ (membership): for the empty set, pairs, omega, the power set and union.
+
+  - For each constant/function symbol, ZFC contains an axiom giving the defining property of that symbol. The axiom of infinity is modified to additionally specify that ~ω~ is the least limit ordinal. Addionally, ZFC contains the axiom of extensionality, regularity, Zorn's lemma and the axiom schema of collection.
+
+  - The five constant/function symbols we added are definable from ZFC formulated only in the language with ~∈~; these extra symbols make the formulation of Zorn's lemma and the continuum hypothesis easier.
+
+- ~CH_f~ is the continuum hypothesis as a first-order logic sentence. The sentence we use is ~∀x, x is an ordinal ⟹ x ≤ ω ∨ P(ω) ≤ x~ where ~a ≤ b~ means that there is a surjection from a subset of ~b~ to ~a~.
+
+**** Forcing
+Both consistency proofs for ~CH~ and ~¬CH~ were done by forcing with Boolean-valued models. To force ~¬CH~, we used Cohen forcing, and to force ~CH~, we used collapse forcing. Some details of our implementation of Boolean-valued models and Cohen forcing can be found in our [[https://github.com/flypitch/flypitch-itp-2019/releases/tag/1.1][ITP paper]].
+
+**** Possible future work
+ - Formalizing the reduction from ZFC to ZFC without function symbols
+ - Consistency of CH via construction of the constructible universe
+ - Proof transfer using the completeness theorem
+ - Forcing over countable transitive models
+ - Forcing using modal logic
+ - Forcing using sheaves
+
+*** Documentation
+A conventional human-readable account of the proof written in type-theoretic foundations, upon which some parts of the formalization are based, is [[https://www.github.com/flypitch/flypitch-notes/][located here]].
+
+*** Compilation
+To compile the Flypitch project, you will need [[https://leanprover.github.io/][Lean 3.4.2]]. Installation instructions for Lean can be found [[https://leanprover-community.github.io/get_started.html][here]]. This will also install a command-line tool called [[https://github.com/leanprover-community/mathlib-tools][leanproject]].
+
+The ~leanpkg.toml~ file points to a certain commit of ~mathlib~, which will be cloned into the project directory. After cloning or extracting the repository to ~flypitch~, navigate to ~flypitch~ and run
+#+BEGIN_SRC bash
+leanproject get-mathlib-cache
+leanproject build
+lean --trust=0 ./src/summary.lean # check `independence_of_CH` as rigorously as possible
+#+END_SRC
+
+Without ~leanproject~, run instead
+#+begin_src bash
+leanpkg configure
+leanpkg build # will take much longer
+lean --trust=0 ./src/summary.lean # check `independence_of_CH` as rigorously as possible
+#+end_src
+
+*** Viewing and navigating the project
+To view the project, we recommend the use of a Lean-aware editor like [[https://github.com/leanprover/lean-mode][Emacs]] or [[https://github.com/leanprover/vscode-lean][VSCode]]. Among other things, like type information, such editors can display the /proof state/ inside a tactic block, making it easier to understand how theorems are being proved.
+
+A summary of the main results can be found in [[src/summary.lean]], containing ~#print~ statements of important definitions and duplicated proofs of the main theorems. From there, one may use their editor's jump-to-definition feature to trace the dependencies of the definitions and proofs.
+
+We also have a formula pretty-printer which prints de Bruijn indexed-formulas as their named representations. Code and examples for the pretty-printer can be found in [[src/print_formula.lean]].
+
+*** Papers
+Our paper /A formal proof of the independence of the continuum hypothesis/, describing [[https://github.com/flypitch/flypitch/releases/tag/2.2][this release]], was accepted to [[https://popl20.sigplan.org/home/CPP-2020][CPP 2020]]. It is available [[https://flypitch.github.io/assets/flypitch-cpp.pdf][here]].
+
+Our paper /A formalization of forcing and the unprovability of the continuum hypothesis/, describing [[https://github.com/flypitch/flypitch/releases/tag/1.2][this release]], was accepted to [[https://itp19.cecs.pdx.edu/][ITP 2019]]. It is available [[https://flypitch.github.io/assets/flypitch-itp-2019.pdf][here]].
+
+**** Citation information:
+
+#+begin_src latex
+@inproceedings{DBLP:conf/cpp/HanD20,
+  author    = {Jesse Michael Han and
+               Floris van Doorn},
+  title     = {A formal proof of the independence of the continuum hypothesis},
+  booktitle = {Proceedings of the 9th {ACM} {SIGPLAN} International Conference on
+               Certified Programs and Proofs, {CPP} 2020, New Orleans, LA, {USA}, January
+               20-21, 2020},
+  year      = {2020},
+  crossref  = {DBLP:conf/cpp/2020},
+  biburl    = {https://dblp.org/rec/bib/conf/cpp/HanD20},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+#+end_src
+
+#+begin_src latex
+@inproceedings{DBLP:conf/itp/HanD19,
+  author    = {Jesse Michael Han and
+               Floris van Doorn},
+  title     = {A Formalization of Forcing and the Unprovability of the Continuum
+               Hypothesis},
+  booktitle = {10th International Conference on Interactive Theorem Proving, {ITP}
+               2019, September 9-12, 2019, Portland, OR, {USA.}},
+  pages     = {19:1--19:19},
+  year      = {2019},
+  crossref  = {DBLP:conf/itp/2019},
+  url       = {https://doi.org/10.4230/LIPIcs.ITP.2019.19},
+  doi       = {10.4230/LIPIcs.ITP.2019.19},
+  timestamp = {Sat, 07 Sep 2019 02:31:13 +0200},
+  biburl    = {https://dblp.org/rec/bib/conf/itp/HanD19},
+  bibsource = {dblp computer science bibliography, https://dblp.org}
+}
+#+end_src
+
+
+*** Team
+ - [[https://www.pitt.edu/~jmh288][Jesse Han]]
+ - [[http://florisvandoorn.com/][Floris van Doorn]]
+
+*** Lean 4 Port
+- [[https://klatz.co][Ian Klatzco]]
+- Claude

@@ -1,0 +1,13 @@
+{
+    "challenge_module": "Challenge",
+    "solution_module": "Solution",
+    "theorem_names": [
+        "erdos501_closed_infinite",
+        "erdos501_closed_size3",
+        "erdos501_hechler_of_CH",
+        "erdos501_independent",
+        "erdos501_sentence_faithful"
+    ],
+    "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+    "enable_nanoda": false
+}
