@@ -192,10 +192,9 @@ def subset'' {n} (t₁ t₂ : bounded_term L_ZFC n) : bounded_formula L_ZFC n :=
   simp only [subset'', boolean_realize_bounded_formula, boolean_realize_bounded_formula_mem',
              boolean_realize_bounded_term_subst_lift, V_forall]
   -- goal: ⨅ x : bSet β, imp (x ∈ brt t₁) (x ∈ brt t₂) = brt t₁ ⊆ᴮ brt t₂
-  rw [subset_unfold']
-  -- goal: ⨅ x : bSet β, imp (x ∈ brt t₁) (x ∈ brt t₂) = ⨅ (w : bSet β), w ∈ brt t₁ ⟹ w ∈ brt t₂
-  -- These should be definitionally equal since imp = ⟹
-  rfl
+  -- definitionally `subset_unfold'` (imp = ⟹); stated via `exact` since the
+  -- goal mixes `(V β).carrier` and `bSet β` (fine at default transparency).
+  exact subset_unfold'.symm
 
 @[simp] lemma fin_0 {n : ℕ} : (0 : Fin (n + 1)).1 = 0 := rfl
 @[simp] lemma fin_1 {n : ℕ} : (1 : Fin (n + 2)).1 = 1 := rfl
@@ -275,6 +274,7 @@ lemma bSet_models_ordered_pairs : ⊤ ⊩[V β] axiom_of_ordered_pairs := by
   have heq : pair a b =ᴮ pair x y = a =ᴮ x ⊓ b =ᴮ y :=
     le_antisymm (le_inf eq_of_eq_pair_left eq_of_eq_pair_right)
                 (pair_congr inf_le_left inf_le_right)
+  show ⊤ ≤ bihimp (pair a b =ᴮ pair x y) (a =ᴮ x ⊓ b =ᴮ y)
   rw [heq]
   -- Need: ⊤ ≤ bihimp (a =ᴮ x ⊓ b =ᴮ y) (a =ᴮ x ⊓ b =ᴮ y)
   rw [bihimp_self]
@@ -344,7 +344,7 @@ lemma B_ext_left_realize_bounded_formula {n : ℕ} (ϕ : bounded_formula L_ZFC (
       | zero => simp [DVec.nth]
       | succ k =>
         show x =ᴮ y ≤ xs.nth k (Nat.lt_of_succ_lt_succ hm) =ᴮ xs.nth k (Nat.lt_of_succ_lt_succ hm)
-        rw [bv_eq_refl]; exact le_top
+        exact le_top.trans (bv_eq_refl _).symm.le
     · exact iInf_le _ (⟨0, Nat.zero_lt_succ n⟩ : Fin (n + 1))
   rw [hkey]
   exact boolean_realize_bounded_formula_congr (inferInstance : Nonempty (V β)) _ _ ϕ DVec.nil
@@ -363,14 +363,14 @@ lemma B_ext_right_realize_bounded_formula {n : ℕ} (ϕ : bounded_formula L_ZFC 
       cases m with
       | zero =>
         show x =ᴮ y ≤ z =ᴮ z
-        rw [bv_eq_refl]; exact le_top
+        exact le_top.trans (bv_eq_refl _).symm.le
       | succ k =>
         cases k with
         | zero => simp [DVec.nth]
         | succ k' =>
           show x =ᴮ y ≤ xs.nth k' (Nat.lt_of_succ_lt_succ (Nat.lt_of_succ_lt_succ hm)) =ᴮ
                xs.nth k' (Nat.lt_of_succ_lt_succ (Nat.lt_of_succ_lt_succ hm))
-          rw [bv_eq_refl]; exact le_top
+          exact le_top.trans (bv_eq_refl _).symm.le
     · exact iInf_le _ (⟨1, by omega⟩ : Fin (n + 2))
   rw [hkey]
   exact boolean_realize_bounded_formula_congr (inferInstance : Nonempty (V β)) _ _ ϕ DVec.nil
@@ -747,7 +747,11 @@ lemma CH_f_is_CH : ⟦CH_f⟧[V β] = CH₂ := by
     intro x; rfl
   simp only [CH_f, boolean_realize_sentence_all, boolean_realize_bounded_formula,
              boolean_realize_bounded_formula_or, Ord_f_is_Ord, h1, h2, realize_at_most_f,
-             V_forall, imp, CH₂, compl_iSup, compl_inf, compl_compl, sup_assoc]
+             imp, CH₂, compl_iSup, compl_inf, compl_compl, sup_assoc]
+  -- `realize_at_most_f` is stated for `x y : V β`; the terms here mix
+  -- `(V β).carrier` and `bSet β`, so rewrite at default transparency.
+  refine iInf_congr fun x => ?_
+  erw [realize_at_most_f, realize_at_most_f]
 
 lemma CH_f_sound {Γ : β} : (Γ ⊩[V β] CH_f) ↔ Γ ≤ CH₂ := by
   change _ ≤ _ ↔ _ ≤ _

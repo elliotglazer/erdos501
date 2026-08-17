@@ -1577,7 +1577,7 @@ lemma check_is_injective_function {x y f : PSet.{u}}
     simp only [iSup_inf_eq', inf_iSup_eq', inf_assoc]
     apply iSup_le; intro k₁
     apply iSup_le; intro k₂
-    have h := key k₂ k₁; simp only [inf_assoc] at h; exact h
+    have h := key k₂ k₁; (try simp only [inf_assoc] at h); exact h
   intro k₁ k₂
   set Γ_kk := Γ ⊓ (pair w₁ v₁ =ᴮ check (f.Func k₁) ⊓ (pair w₂ v₂ =ᴮ check (f.Func k₂) ⊓ v₁ =ᴮ v₂))
   by_cases h_pos : ⊥ < Γ_kk

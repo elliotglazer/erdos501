@@ -1619,13 +1619,13 @@ inductive bounded_preterm (L : Language.{u}) (n : ℕ) : ℕ → Type u
 export bounded_preterm (bd_var bd_func bd_app)
 
 /-- A fully applied bounded term with at most `n` free variables. -/
-def bounded_term (n : ℕ) := bounded_preterm L n 0
+@[reducible] def bounded_term (n : ℕ) := bounded_preterm L n 0
 
 /-- A closed preterm (no free variables), needing `l` more arguments. -/
-def closed_preterm (l : ℕ) := bounded_preterm L 0 l
+@[reducible] def closed_preterm (l : ℕ) := bounded_preterm L 0 l
 
 /-- A closed term: no free variables and fully applied. -/
-def closed_term := closed_preterm L 0
+@[reducible] def closed_term := closed_preterm L 0
 
 variable {L}
 

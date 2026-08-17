@@ -435,7 +435,7 @@ noncomputable def quotient_lift {α : Type u} {β : Sort v} {R : Setoid α} :
         (fun hxs => h (DVecRel.rcons (Setoid.refl x) hxs))
         qs)
       (fun x x' hx => by
-        simp only
+        try simp only
         congr 1; apply funext; intro xs
         apply h; exact DVecRel.rcons hx (DVec.rel_refl xs))
       q
@@ -1262,3 +1262,9 @@ theorem bv_by_contra {𝔹} [BooleanAlgebra 𝔹] {Γ b : 𝔹} (H : Γ ≤ imp 
 def with_h_asms {𝔹} [Lattice 𝔹] (Γ : 𝔹) : ∀ (_ : List 𝔹) (g : 𝔹), Prop
   | [], x => Γ ≤ x
   | x :: xs, y => Γ ≤ x → with_h_asms Γ xs y
+
+/-! ### Compatibility shims for newer Mathlib (port to Mathlib 355bc1e, 2026-08) -/
+
+/-- `Finset.toSet` is no longer in Mathlib; the port uses it for the coercion
+`Finset α → Set α`. -/
+abbrev Finset.toSet {α : Type*} (s : Finset α) : Set α := (s : Set α)

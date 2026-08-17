@@ -1099,6 +1099,7 @@ lemma boolean_realize_bounded_formula_insert_lift {n l} (v : DVec S n) (x : S) (
   -- Use boolean_realize_bounded_formula_insert_lift with m=2, v=(x::y::v), x=z
   convert boolean_realize_bounded_formula_insert_lift (DVec.cons x (DVec.cons y v)) z 2
     (by omega) f DVec.nil using 2
+  rfl
 
 /-! ## boolean_realize_subst_formula0 — src/bfol.lean:881-897 -/
 

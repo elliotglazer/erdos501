@@ -254,7 +254,10 @@ noncomputable instance decidable_eq_𝔹 : DecidableEq 𝔹 :=
 
 -- src/bvm.lean:203
 /-- The underlying type of a bSet -/
-@[simp] def type : bSet 𝔹 → Type u
+-- `type` is reducible: with Lean ≥ 4.34, `simp`/`dsimp` unify lemma binders at
+-- reducible transparency, and lemmas about `x.bval i` / `x.func i` for `x` built
+-- from `u.type` (e.g. `set_of_indicator`) only match if `(…).type` unfolds to `u.type`.
+@[reducible, simp] def type : bSet 𝔹 → Type u
   | ⟨α, _, _⟩ => α
 
 -- src/bvm.lean:206
@@ -972,7 +975,7 @@ lemma mem_congr {Γ : 𝔹} {x₁ x₂ y₁ y₂ : bSet 𝔹}
   exact H₃
 
 -- src/bvm.lean:723
-@[reducible, instance] def b_setoid (Γ : 𝔹) : Setoid (bSet 𝔹) :=
+@[reducible] def b_setoid (Γ : 𝔹) : Setoid (bSet 𝔹) :=
   { r := bv_eq' Γ
     iseqv := ⟨fun _ => bv_refl, fun h => bv_symm h, fun h1 h2 => bv_trans h1 h2⟩ }
 
@@ -1286,7 +1289,7 @@ lemma mixing_lemma' {ι : Type u} (a : ι → 𝔹) (τ : ι → bSet 𝔹)
     --   ≤ (τ j).func i_z_snd ∈ᴮ τ i  (by subst_congr_mem_right with bv_eq_symm)
     -- goal: a i ⊓ (a j ⊓ (τ i_z_fst).func i_z_snd ∈ᴮ τ j) ≤ (τ i_z_fst).func i_z_snd ∈ᴮ τ i
     have heq : a i ⊓ a j ≤ τ i =ᴮ τ j := h_eq
-    simp only [func, ← inf_assoc] at *
+    try simp only [func, ← inf_assoc] at *
     calc a i ⊓ a j ⊓ (τ i_z_fst).func i_z_snd ∈ᴮ τ j
         ≤ (τ i =ᴮ τ j) ⊓ (τ i_z_fst).func i_z_snd ∈ᴮ τ j :=
           le_inf (inf_le_left.trans heq) inf_le_right
@@ -1381,7 +1384,7 @@ lemma down_set_trans {a b : α} (h : a ≺ b) : down_set r a ⊆ down_set r b :=
 end well_ordering
 
 variable (r : type (@B_small_witness _ _ ϕ) → type (@B_small_witness _ _ ϕ) → Prop)
-variable [IsWellOrder _ r]
+variable [IsWellOrder (type (@B_small_witness _ _ ϕ)) r]
 local infix:50 " ≺ " => r
 
 -- src/bvm.lean:1029
@@ -1500,8 +1503,10 @@ end smallness
 -- src/bvm.lean:1107
 lemma maximum_principle (ϕ : bSet 𝔹 → 𝔹) (h_congr : B_ext ϕ) : ∃ u, (⨆ (x : bSet 𝔹), ϕ x) = ϕ u := by
   -- Get a well-order r on type B_small_witness
-  let r := @WellOrderingRel ((@B_small_witness 𝔹 _ ϕ).type)
-  haveI : IsWellOrder _ r := WellOrderingRel.isWellOrder
+  obtain ⟨r, hr⟩ : ∃ r : (@B_small_witness 𝔹 _ ϕ).type → (@B_small_witness 𝔹 _ ϕ).type → Prop,
+      IsWellOrder ((@B_small_witness 𝔹 _ ϕ).type) r :=
+    ⟨WellOrderingRel, WellOrderingRel.isWellOrder⟩
+  haveI : IsWellOrder ((@B_small_witness 𝔹 _ ϕ).type) r := hr
   -- Hypothesis for mixing_lemma: w_ac i ⊓ w_ac j ≤ func i =ᴮ func j
   have mixing_hyp : ∀ i j : (@B_small_witness 𝔹 _ ϕ).type,
       witness_antichain r i ⊓ witness_antichain r j ≤
@@ -2704,10 +2709,12 @@ theorem bSet_axiom_of_union : (⨅ (u : bSet 𝔹), (⨆ v, ⨅ x,
 @[simp] lemma set_of_indicator_type {u : bSet 𝔹} {f : u.type → 𝔹} :
     (set_of_indicator f).type = u.type := rfl
 
-@[simp] lemma set_of_indicator_func {u : bSet 𝔹} {f : u.type → 𝔹} {i : u.type} :
+@[simp] lemma set_of_indicator_func {u : bSet 𝔹} {f : u.type → 𝔹}
+    {i : (set_of_indicator f).type} :
     (set_of_indicator f).func i = u.func i := rfl
 
-@[simp] lemma set_of_indicator_bval {u : bSet 𝔹} {f : u.type → 𝔹} {i : u.type} :
+@[simp] lemma set_of_indicator_bval {u : bSet 𝔹} {f : u.type → 𝔹}
+    {i : (set_of_indicator f).type} :
     (set_of_indicator f).bval i = f i := rfl
 
 -- src/bvm.lean:1993
@@ -2941,6 +2948,8 @@ lemma check_mem_set_of_indicator_iff {x : PSet}
         hj (H_inj i j heq).symm
       have hbot : (check (A i) : bSet 𝔹) =ᴮ check (A j) = ⊥ :=
         check_bv_eq_bot_of_not_equiv hne
+      -- the casts are definitionally the identity
+      change χ j ⊓ (check (A i) : bSet 𝔹) =ᴮ check (A j) ≤ χ i
       simp [hbot]
   · -- Backward: indicator implies membership
     intro H Γ
@@ -2980,7 +2989,10 @@ lemma pointwise_bounded_of_check_subset_check {x : PSet} {p₁ p₂ : (check x).
     le_trans (le_inf himp le_rfl) bv_imp_elim
   -- Unfold membership in set_of_indicator p₂
   rw [mem_unfold] at hmem
-  simp only [set_of_indicator_bval, set_of_indicator_func, check_func] at hmem
+  simp only [set_of_indicator_bval, set_of_indicator_func] at hmem
+  -- expose `(check x).type` as the binder type so that `check_func` matches
+  dsimp only [set_of_indicator] at hmem
+  simp only [check_func] at hmem
   -- hmem : p₁ i ≤ ⨆ j, p₂ j ⊓ check (x.Func (check_cast i)) =ᴮ check (x.Func (check_cast j))
   -- Bound this iSup by p₂ i
   calc p₁ i ≤ ⨆ j, p₂ j ⊓ check (x.Func (check_cast i)) =ᴮ (check (x.Func (check_cast j)) : bSet 𝔹) := hmem
@@ -3089,7 +3101,8 @@ theorem bSet_axiom_of_infinity : (⨆ (u : bSet 𝔹), axiom_of_infinity_spec u)
 /-- The n-th von Neumann ordinal in bSet 𝔹 is the check-name of the n-th ordinal in PSet -/
 @[reducible] def of_nat : ℕ → bSet 𝔹 := fun n => check (PSet.ofNat n)
 
-@[simp] lemma omega_func {k : ULift ℕ} : (omega : bSet 𝔹).func k = of_nat k.down := rfl
+@[simp] lemma omega_func {k : (omega : bSet 𝔹).type} :
+    (omega : bSet 𝔹).func k = of_nat (k : ULift ℕ).down := rfl
 
 lemma omega_definite {n : ℕ} {Γ : 𝔹} : Γ ≤ of_nat n ∈ᴮ omega := by
   suffices h : of_nat n ∈ᴮ omega = (⊤ : 𝔹) by
@@ -3144,7 +3157,7 @@ lemma forall_empty {Γ : 𝔹} {ϕ : bSet 𝔹 → 𝔹} : Γ ≤ ⨅ x, x ∈�
   rw [← deduction]
   exact le_trans (bot_of_mem_empty inf_le_right) bot_le
 
-@[simp] lemma omega_bval {k : ULift ℕ} : (omega : bSet 𝔹).bval k = ⊤ := rfl
+@[simp] lemma omega_bval {k : (omega : bSet 𝔹).type} : (omega : bSet 𝔹).bval k = ⊤ := rfl
 
 -- src/bvm.lean:2291
 theorem bSet_axiom_of_infinity' :

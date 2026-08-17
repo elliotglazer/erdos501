@@ -573,8 +573,14 @@ noncomputable def χ (ν : (check (PSet.pSet_aleph2) : bSet 𝔹).type) : ℕ �
   fun n => principal_open ν n
 
 /-- `cohen_real.mk ν` is the subset of (ω : bSet 𝔹) -/
-noncomputable def mk (ν : (check (PSet.pSet_aleph2) : bSet 𝔹).type) : bSet 𝔹 :=
-  @set_of_indicator 𝔹 _ omega (fun n => χ ν n.down)
+-- Definitionally `@set_of_indicator 𝔹 _ omega (fun n => χ ν n.down)` (the
+-- Lean 3 definition); written out and marked reducible so that `(mk ν).type`
+-- reduces to `ULift ℕ` at reducible transparency (needed by `simp` in
+-- Lean ≥ 4.34).
+@[reducible] noncomputable def mk (ν : (check (PSet.pSet_aleph2) : bSet 𝔹).type) : bSet 𝔹 :=
+  ⟨ULift ℕ, fun n => of_nat n.down, fun n => χ ν n.down⟩
+
+example (ν) : mk ν = @set_of_indicator 𝔹 _ omega (fun n => χ ν n.down) := rfl
 
 @[simp] lemma mk_type {ν} : (mk ν).type = ULift ℕ := rfl
 
