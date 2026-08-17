@@ -2,7 +2,7 @@
 # Judge this repository with the Lean comparator.
 #
 #   scripts/run-comparator.sh                 # full challenge (config.json)
-#   scripts/run-comparator.sh config-zfc.json # only the targets provable today
+#   scripts/run-comparator.sh config-proved.json # only the targets provable today
 #
 # Requires `landrun`, `lean4export` and `comparator` on PATH (see
 # scripts/install-comparator-tools.sh), or the COMPARATOR_LANDRUN /

@@ -13,49 +13,68 @@ Formalization of both questions of [Erdős problem #501](https://www.erdosproble
 (Newelski–Pawlikowski–Seredyński 1987; formalized here without any boundedness
 hypothesis).
 **First question — independent of ZFC**: `CH` gives a counterexample (Hechler
-1972), while adding `ω₂` random reals to a model of `CH` gives a positive answer
-(E. Glazer, 2026; see `docs/paper/`).  The negative direction is formalized at
-Mathlib level; the independence statement itself is formalized in the language
-of Flypitch (first-order `ZFC`, Boolean-valued models) and is the open part of
-this repository — see [`docs/STATUS.md`](docs/STATUS.md).
+1972), while adding `𝔠⁺` random reals gives a positive answer (E. Glazer, 2026;
+see `docs/paper/`).  Both are formalized here: Hechler's counterexample at
+Mathlib level, and the consistency of a positive answer in the language of
+Flypitch (first-order `ZFC`, Boolean-valued models): the sentence `Erdos501_f`
+is forced by the random algebra with `𝔠⁺` coordinates, so
+`¬ (ZFC ⊢ₛ' ∼Erdos501_f)`, and `Erdos501_f` is faithful (in the standard
+`ZFSet` interpretation it is equivalent to the Mathlib statement).  The one
+remaining piece is the *first-order* form of the negative direction,
+`¬ (ZFC ⊢ₛ' Erdos501_f)` (Hechler's construction inside the Boolean-valued
+collapse extension, where `CH` holds) — see [`docs/STATUS.md`](docs/STATUS.md).
 
 The repository is laid out as a **comparator challenge**
 ([leanprover/comparator](https://github.com/leanprover/comparator)): the trusted
 statements are in [`Challenge.lean`](Challenge.lean), the proofs in
-[`Solution.lean`](Solution.lean), and `config.json` / `config-zfc.json` drive
+[`Solution.lean`](Solution.lean), and `config.json` / `config-proved.json` drive
 the judge.  See [`docs/COMPARATOR.md`](docs/COMPARATOR.md).
 
-## The five targets
+## The seven targets
 
 | target | statement (informal) | status |
 |---|---|---|
 | `erdos501_closed_infinite` | closed `A_x` of measure `< 1` ⇒ infinite independent set | proved (`Erdos501/Closed.lean`) |
 | `erdos501_closed_size3` | closed `A_x` of measure `< 1` ⇒ independent set of size 3 | proved (`Erdos501/Closed.lean`) |
 | `erdos501_hechler_of_CH` | `ℵ₁ = 𝔠` ⇒ a family of bounded null sets with no infinite independent set | proved (`Erdos501/Hechler.lean`) |
-| `erdos501_independent` | `independent ZFC Erdos501_f` | **open** (units H3, F3, F5, F6, F7 in `docs/STATUS.md`) |
-| `erdos501_sentence_faithful` | `stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` | **open** |
+| `erdos501_not_refutable` | `¬ (ZFC ⊢ₛ' ∼Erdos501_f)` — `𝔠⁺` random reals force `Erdos501_f` | proved (`Flypitch4/Erdos501/Main.lean`) |
+| `erdos501_not_provable` | `¬ (ZFC ⊢ₛ' Erdos501_f)` — Hechler in the collapse extension | **open** (unit H3 in `docs/STATUS.md`) |
+| `erdos501_independent` | `independent ZFC Erdos501_f` (the two above) | open in the `not_provable` component |
+| `erdos501_sentence_faithful` | `stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` | proved (`Flypitch4/Erdos501/Bridge.lean`) |
 
-`config-zfc.json` lists the first three and **passes the comparator** (see
-`docs/COMPARATOR.md`); `config.json` lists all five and is the open target.
+`config-proved.json` lists the five proved targets and **passes the comparator**
+(see `docs/COMPARATOR.md`); `config.json` lists all seven and is the open target.
 
 ## Layout
 
 ```
-Challenge.lean, Solution.lean, config.json, config-zfc.json   comparator challenge
-Erdos501.lean, Erdos501/         the development
+Challenge.lean, Solution.lean, config.json, config-proved.json   comparator challenge
+Erdos501.lean, Erdos501/         the Mathlib-level development
   Closed.lean                      NPS87 (second question)
   Hechler.lean                     CH ⇒ ¬P
   ZFCCore/                         Lemma 2.1/2.2, Def. 3.1, Thm 3.2 of the paper (ZFC, no forcing)
-  Sentence.lean, Bridge.lean       first-order rendering of P; standard interpretation in ZFSet
-  Forcing/                         countable-support/Borel reading, homogeneous reading, Δ-system,
-                                   Col(ω₁,ℝ) × (𝔠⁺ random reals) Boolean algebra
-  Independence.lean                assembly of `independent ZFC Erdos501_f`
+  Independence.lean                assembly of `independent ZFC Erdos501_f` (one `sorry`: unit H3)
 Flypitch4.lean, Flypitch4/       vendored Lean 4 port of Flypitch (Han–van Doorn; port by
-                                 I. Klatzco + Claude), plus measure/random-algebra additions
-third_party/flypitch4/           upstream license, README, validation notes
-validation/AxiomAudit.lean       `#print axioms` of all targets
+                                 I. Klatzco + Claude), plus
+  MeasureAlgebra, RandomAlgebra,   measure algebras, the random algebra, ¬CH via random reals
+  ForcingRandom, SummaryRandom
+  Erdos501/                        the forcing development for #501 (namespace `Flypitch.Erdos501`):
+    Sentence, Semantics,             `Erdos501_f` and its Boolean value
+    StdSemantics, RealsInZFSet,      the standard interpretation and the bridge (`stdStructure_realize_Erdos501_f_iff`)
+    ZFSetCOF, Bridge
+    RandomForcing, DeltaSystem,      units F3–F5 (Borel reading, Δ-system, homogeneous reading, fullness)
+    HomogeneousReading, BorelNames
+    ZFCCore, BinaryExpansion,        units F6–F8: the certificate inside V^𝔹, internal reals,
+    InternalReals, RealReading,      envelopes, selection, recursion, assembly, internal fields ≅ Rdot
+    Envelopes, Selection, Recursion,
+    Assembly, InternalField,
+    InternalIso, Transfer
+    Main                             `erdos501_of_random`, `neg_Erdos501_f_unprovable`
+    ColRandom                        the literal Col × Random algebra (statement only, off-route)
+third_party/flypitch4/           upstream license, README, validation notes, audit at 83a5988
+validation/                      `#print axioms` scripts (AxiomAudit: targets; Erdos501Audit: forcing tree)
 scripts/                         install/run comparator, axiom audit
-docs/                            STATUS, PROVENANCE, COMPARATOR, audits/, paper/
+docs/                            STATUS, PROVENANCE, COMPARATOR, PORTING-NOTES, audits/, paper/
 ```
 
 ## Building
@@ -67,8 +86,10 @@ lake build                       # Flypitch4, Erdos501, Challenge, Solution
 scripts/check-axioms.sh          # axioms of every target (sorryAx = not closed)
 ```
 
-The proofs are pure Lean; no `native_decide`, no extra axioms.  Files that
-depend on `sorry` are exactly the open targets and their supporting units.
+The proofs are pure Lean; no `native_decide`, no extra axioms.  The
+declarations depending on `sorry` are exactly `Erdos501.erdos501_f_unprovable`
+(unit H3, hence `erdos501_not_provable` and `erdos501_independent`) and the
+off-route assertion `Flypitch.Erdos501.erdos501_of_col_random`.
 
 ## Mathematical sources
 

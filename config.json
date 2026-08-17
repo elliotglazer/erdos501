@@ -5,6 +5,8 @@
         "erdos501_closed_infinite",
         "erdos501_closed_size3",
         "erdos501_hechler_of_CH",
+        "erdos501_not_refutable",
+        "erdos501_not_provable",
         "erdos501_independent",
         "erdos501_sentence_faithful"
     ],

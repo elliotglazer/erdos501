@@ -15,10 +15,10 @@ in its own process.
 
 | file | role |
 |---|---|
-| `Challenge.lean` | trusted statements (`sorry`) — five targets |
-| `Solution.lean` | the same statements proved by delegation to `Erdos501` |
-| `config.json` | full challenge (all five targets) |
-| `config-zfc.json` | the targets provable today (closed case ×2, Hechler) |
+| `Challenge.lean` | trusted statements (`sorry`) — seven targets |
+| `Solution.lean` | the same statements proved by delegation to `Erdos501` / `Flypitch4.Erdos501` |
+| `config.json` | full challenge (all seven targets) |
+| `config-proved.json` | the targets provable today: closed case ×2, Hechler, `erdos501_not_refutable`, `erdos501_sentence_faithful` — **passes** (2026‑08‑17) |
 | `lakefile.toml`, `lean-toolchain`, `lake-manifest.json` | the trusted build description (Mathlib pin) |
 | `scripts/install-comparator-tools.sh` | installs `landrun`, `lean4export` (at our toolchain tag), `comparator`, optionally `nanoda` |
 | `scripts/run-comparator.sh [config]` | `lake env comparator <config>` behind the recommended `systemd-run` wrapper |
@@ -40,19 +40,24 @@ trustworthy".  Here that closure is:
    own validation is under `third_party/flypitch4/`.  Only what
    `Flypitch4.Summary` transitively imports is in the closure — but that is
    most of the port.
-3. **`Erdos501.Sentence`** — the sentence `Erdos501_f`.  This is the single
-   most important thing to audit by hand: it must say "every family of bounded
-   sets of outer measure < 1 has an infinite independent set" and nothing
-   weaker.  `validation/Erdos501Print.lean` (from the flypitch patch) prints
+3. **`Flypitch4.Erdos501.Sentence`** — the sentence `Erdos501_f` (and its
+   building blocks: the `L_ZFC` rendering of "complete ordered field", of the
+   internal reals, of "outer measure < 1" as an interval cover of total length
+   < 1, and of "infinite independent set").  This is the single most important
+   thing to audit by hand: it must say "every complete ordered field has the
+   Erdős property" and nothing weaker.  `validation/Erdos501Print.lean` prints
    it in readable form; the faithfulness target `erdos501_sentence_faithful`
-   ties it to the Mathlib statement `erdos501_deepmind` in the standard
-   `ZFSet` interpretation, which reduces the audit of the sentence to the audit
-   of `stdStructure` and `erdos501_deepmind`.
-4. **`Erdos501.Bridge`** — `stdStructure` and `erdos501_deepmind` (definitions
-   only).
+   ties it to the Mathlib statement `erdos501_deepmind` in the standard `ZFSet`
+   interpretation, which reduces the audit of the sentence to the audit of
+   `stdStructure` and `erdos501_deepmind`.
+4. **`Flypitch4.Erdos501.StdSemantics`** — `stdStructure` (Mathlib's `ZFSet`
+   with `∅`, Kuratowski pairs, `ω`, `𝒫`, `⋃`, `∈`) and `erdos501_deepmind`
+   (verbatim the `formal-conjectures` proposition); the rest of that file
+   (`realize_Erdos501_f_std`) is a lemma, not part of any statement.
 
 Everything else (`Erdos501/*` proofs, the random-algebra additions to
-`Flypitch4`, `Solution.lean`) is untrusted from the comparator's point of view.
+`Flypitch4`, the forcing development `Flypitch4/Erdos501/*` beyond the two
+files above, `Solution.lean`) is untrusted from the comparator's point of view.
 
 ## Running
 
@@ -66,8 +71,8 @@ scripts/install-comparator-tools.sh   # needs go, and cargo for nanoda (optional
 export PATH="$PWD/.tools/bin:$PATH"
 
 # judge
-scripts/run-comparator.sh config-zfc.json   # should print "Your solution is okay!"
-scripts/run-comparator.sh config.json       # fails until targets 4–5 are closed
+scripts/run-comparator.sh config-proved.json   # prints "Your solution is okay!"
+scripts/run-comparator.sh config.json          # fails until `erdos501_not_provable` is closed
 ```
 
 Without `landrun` (e.g. macOS) a *non-sandboxed* dry run is possible with
@@ -86,7 +91,7 @@ axioms and kernel acceptance but does not protect against a malicious
 
 ## Statement conventions
 
-The five statements are written so that a reader who trusts Mathlib and
+The seven statements are written so that a reader who trusts Mathlib and
 Flypitch can check them against erdosproblems.com/501 by eye:
 
 * hypotheses exactly as in `formal-conjectures`' `501.lean` (per-set
@@ -94,5 +99,7 @@ Flypitch can check them against erdosproblems.com/501 by eye:
   `volume (A x) < 1`), conclusion `X.Pairwise (fun x y => x ∉ A y)`;
 * `erdos501_hechler_of_CH` takes `CH` as `(ℵ₁ : Cardinal.{u}) = 𝔠` (a universe
   parameter `u`; all universes are equivalent through `Cardinal.lift`);
-* `erdos501_independent` is `independent ZFC Erdos501_f`, the exact shape of
-  Flypitch's `independence_of_CH`.
+* `erdos501_not_refutable` / `erdos501_not_provable` are the two halves
+  `¬ (ZFC ⊢ₛ' ∼Erdos501_f)` / `¬ (ZFC ⊢ₛ' Erdos501_f)` of
+  `erdos501_independent : independent ZFC Erdos501_f`, the exact shape of
+  Flypitch's `independence_of_CH` (`bd_not` is Flypitch's `∼`).

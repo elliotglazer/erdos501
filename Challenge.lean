@@ -10,12 +10,15 @@ what the accompanying `Solution.lean` must prove.  Everything that this file
 imports is part of the trusted base and should be audited by a human:
 
 * Mathlib (Lebesgue measure on `ℝ`, `Set.Pairwise`, cardinals);
-* `Flypitch4.*` — the Lean 4 port of Flypitch (first-order logic, the theory
-  `ZFC`, the proof system `⊢ₛ'`, the predicate `independent`);
-* `Erdos501.Sentence` — the first-order sentence `Erdos501_f : sentence L_ZFC`
-  rendering the first question of #501 in the language of set theory;
-* `Erdos501.Bridge` — the standard interpretation `stdStructure` of `L_ZFC` in
-  Mathlib's `ZFSet` and the Mathlib-level proposition `erdos501_deepmind`.
+* `Flypitch4.Summary` — the Lean 4 port of Flypitch (first-order logic, the
+  theory `ZFC`, the proof system `⊢ₛ'`, the predicate `independent`);
+* `Flypitch4.Erdos501.Sentence` — the first-order sentence
+  `Erdos501_f : sentence L_ZFC` rendering the first question of #501 in the
+  language of set theory (`L_ZFC`: `∅`, pairs, `ω`, `𝒫`, `⋃`, `∈`);
+* `Flypitch4.Erdos501.StdSemantics` — the standard interpretation
+  `stdStructure` of `L_ZFC` in Mathlib's `ZFSet` and the Mathlib-level
+  proposition `erdos501_deepmind` (verbatim the `formal-conjectures` statement
+  of the first question).
 
 ## The problem (erdosproblems.com/501)
 
@@ -31,7 +34,7 @@ per-set boundedness `Bornology.IsBounded (A x)`, outer measure
 `volume.toOuterMeasure (A x) < 1` (definitionally `volume (A x)`, which on an
 arbitrary set is Lebesgue outer measure), independence `X.Pairwise (fun x y => x ∉ A y)`.
 
-## The five targets
+## The targets
 
 1. `erdos501_closed_infinite` — second question, strong form (NPS87): closed
    sets of measure `< 1` admit an *infinite* independent set.
@@ -39,10 +42,15 @@ arbitrary set is Lebesgue outer measure), independence `X.Pairwise (fun x y => x
    size `3`.
 3. `erdos501_hechler_of_CH` — Hechler: under `CH` the first question has a
    negative answer (a `ZFC` theorem, stated at Mathlib level).
-4. `erdos501_independent` — the first question is independent of `ZFC`, in the
-   sense of Flypitch: neither `Erdos501_f` nor its negation is derivable from
-   the first-order theory `ZFC`.
-5. `erdos501_sentence_faithful` — faithfulness of the rendering: in the standard
+4. `erdos501_not_refutable` — `ZFC` does not refute the first-order rendering
+   of the first question: `¬ (ZFC ⊢ₛ' ∼Erdos501_f)` (a positive answer is
+   consistent: it holds after adding `𝔠⁺` random reals).
+5. `erdos501_not_provable` — `ZFC` does not prove it: `¬ (ZFC ⊢ₛ' Erdos501_f)`
+   (a negative answer is consistent: Hechler's counterexample under `CH`, in
+   the collapse extension).
+6. `erdos501_independent` — the first question is independent of `ZFC`, in the
+   sense of Flypitch (`independent ZFC Erdos501_f`, i.e. 4 ∧ 5).
+7. `erdos501_sentence_faithful` — faithfulness of the rendering: in the standard
    `ZFSet` interpretation, `Erdos501_f` holds iff the Mathlib-level statement
    `erdos501_deepmind` holds.
 -/
@@ -51,8 +59,8 @@ import Mathlib.SetTheory.Cardinal.Continuum
 import Mathlib.SetTheory.Cardinal.Aleph
 import Mathlib.Data.Set.Card
 import Flypitch4.Summary
-import Erdos501.Sentence
-import Erdos501.Bridge
+import Flypitch4.Erdos501.Sentence
+import Flypitch4.Erdos501.StdSemantics
 
 open MeasureTheory
 open scoped Cardinal
@@ -98,19 +106,35 @@ theorem erdos501_hechler_of_CH :
 
 /-! ### First question: independence from `ZFC` -/
 
+/-- `ZFC` does not refute the first question: there is no derivation of
+`∼Erdos501_f` from the first-order theory `ZFC` of Flypitch
+(`Flypitch4/Zfc.lean`).  Mathematically: after adding `𝔠⁺` random reals every
+family of sets of outer measure `< 1` has an infinite independent set
+(E. Glazer, 2026). -/
+theorem erdos501_not_refutable :
+    ¬ (ZFC ⊢ₛ' (bd_not Flypitch.Erdos501.Erdos501_f : sentence L_ZFC)) := by
+  sorry
+
+/-- `ZFC` does not prove the first question: there is no derivation of
+`Erdos501_f` from `ZFC`.  Mathematically: `CH` holds in the collapse extension
+`V^{Col(ω₁, 𝒫(ω))}` (Flypitch's `V_𝔹_collapse_models_CH`) and `CH` gives
+Hechler's counterexample. -/
+theorem erdos501_not_provable : ¬ (ZFC ⊢ₛ' Flypitch.Erdos501.Erdos501_f) := by
+  sorry
+
 /-- The first question of #501 is independent of `ZFC`: with `ZFC` the
-first-order theory of Flypitch (`Flypitch4/Zfc.lean`) and `Erdos501_f` the
-`L_ZFC`-sentence of `Erdos501/Sentence.lean`, neither `Erdos501_f` nor
-`∼Erdos501_f` has a derivation from `ZFC`.  Compare `independence_of_CH :
-independent ZFC CH_f` in `Flypitch4/Summary.lean`. -/
+first-order theory of Flypitch and `Erdos501_f` the `L_ZFC`-sentence of
+`Flypitch4/Erdos501/Sentence.lean`, neither `Erdos501_f` nor `∼Erdos501_f` has
+a derivation from `ZFC`.  Compare `independence_of_CH : independent ZFC CH_f`
+in `Flypitch4/Summary.lean`. -/
 theorem erdos501_independent : independent ZFC Flypitch.Erdos501.Erdos501_f := by
   sorry
 
 /-- Faithfulness of the first-order rendering: in the standard interpretation of
-`L_ZFC` on Mathlib's `ZFSet` (`Erdos501/Bridge.lean`), the sentence
-`Erdos501_f` is realized iff the Mathlib-level statement of the first question
-(`erdos501_deepmind`, verbatim the right-hand side of `formal-conjectures`'
-`erdos_501`) holds. -/
+`L_ZFC` on Mathlib's `ZFSet` (`Flypitch4/Erdos501/StdSemantics.lean`), the
+sentence `Erdos501_f` is realized iff the Mathlib-level statement of the first
+question (`erdos501_deepmind`, verbatim the right-hand side of
+`formal-conjectures`' `erdos_501`) holds. -/
 theorem erdos501_sentence_faithful :
     Flypitch.Erdos501.stdStructure ⊨ₘ Flypitch.Erdos501.Erdos501_f ↔
       Flypitch.Erdos501.erdos501_deepmind := by

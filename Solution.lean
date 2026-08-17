@@ -12,7 +12,7 @@ this file may import anything.
 Targets whose proofs are not yet complete in the development are still
 present, so that `lake build Solution` succeeds; the comparator is run with a
 `config` that lists only the targets whose proofs are closed
-(see `config-zfc.json`) until the full `config.json` can be met.
+(see `config-proved.json`) until the full `config.json` can be met.
 -/
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.SetTheory.Cardinal.Continuum
@@ -54,6 +54,13 @@ theorem erdos501_hechler_of_CH :
   fun hCH => Erdos501.hechler_of_CH hCH
 
 /-! ### First question: independence from `ZFC` -/
+
+theorem erdos501_not_refutable :
+    ¬ (ZFC ⊢ₛ' (bd_not Flypitch.Erdos501.Erdos501_f : sentence L_ZFC)) :=
+  Erdos501.neg_erdos501_f_unprovable
+
+theorem erdos501_not_provable : ¬ (ZFC ⊢ₛ' Flypitch.Erdos501.Erdos501_f) :=
+  Erdos501.erdos501_f_unprovable
 
 theorem erdos501_independent : independent ZFC Flypitch.Erdos501.Erdos501_f :=
   Erdos501.erdos501_independent

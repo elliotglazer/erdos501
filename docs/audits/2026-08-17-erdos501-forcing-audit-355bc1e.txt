@@ -1,0 +1,242 @@
+'Flypitch.Erdos501.Erdos501_f' depends on axioms: [propext, Quot.sound]
+'Flypitch.Erdos501.𝔹_col_random' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.𝔹_col_random.instNontrivialCBA' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.mk_RandomIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.V_col_random_models_ZFC' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.erdos501_of_col_random' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.neg_Erdos501_f_unprovable_of_col_random' depends on axioms: [propext,
+ sorryAx,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.Erdos501_ex_f' depends on axioms: [propext, Quot.sound]
+'Flypitch.Erdos501.realize_Erdos501_ex_f' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.forced_Erdos501_ex_f_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.erdos501_ex_forced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.erdos501_ex_of_random' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.V_random_models_ZFC' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.neg_Erdos501_ex_f_unprovable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.outerMeasureLtOne_of_readings' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.Atr_isFun' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.Atr_values' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.infinite_Xpb' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.independent_Xpb' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.erdosProperty_of_COF' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.erdos501_forced' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.erdos501_of_random' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.neg_Erdos501_f_unprovable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.stdStructure' depends on axioms: [propext, Quot.sound]
+'Flypitch.Erdos501.erdos501_deepmind' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.realize_Erdos501_f_std' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.StdSem.mem_omega_iff' depends on axioms: [propext, Quot.sound]
+'Flypitch.Erdos501.StdSem.natZ_injective' depends on axioms: [propext, Quot.sound]
+'Flypitch.Erdos501.RealsInZFSet.cutZ_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RealsInZFSet.completeOrderedField_Rz' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RealsInZFSet.exists_cover_of_volume_lt_one' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RealsInZFSet.outerMeasureLtOne_setZ' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RealsInZFSet.erdos501_deepmind_of_std' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFSetCOF.COF.instFieldCarrier' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFSetCOF.COF.instConditionallyCompleteLinearOrderCarrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.ZFSetCOF.COF.instIsStrictOrderedRingCarrier' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.ZFSetCOF.COF.realIso' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFSetCOF.COF.volume_pull_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFSetCOF.COF.erdosProperty_of_deepmind' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFSetCOF.erdos501_std_of_deepmind' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.stdStructure_realize_Erdos501_f_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_countable_support' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_rep_countable_support' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mkReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mkReal_definite' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mem_mkReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.genericReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.eq_of_forall_of_nat_mem_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_mkReal_bv_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_mkReal_restrict_bv_eq' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.map_restrict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.map_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.iIndepFun_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.comap_restrict_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.indepFun_restrict_restrict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.indepFun_restrict_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.map_restrict_prod_restrict' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.μ_random_restrict_prod_restrict' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.map_restrict_prod_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.μ_random_restrict_prod_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.measure_restrict_prod_eval' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.measure_pos_of_fiber_pos_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.measure_pos_of_fiber_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.bot_lt_inf_mk_of_fiber_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_not_mem_of_countable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_mem_not_mem_of_countable' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_fresh_of_fiber_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.map_comp_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.indepFun_restrict_comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.map_restrict_prod_comp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.measure_restrict_prod_of_map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.measure_pos_of_fiber_pos_of_map' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.bot_lt_inf_mk_of_fiber_pos_comp' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_fresh_petal_of_fiber_pos' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.delta_system_countable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.card_measurableSet_le_continuum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.card_measurable_le_continuum' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.homogeneous_reading' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.bv_eq_mkReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.borelName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mem_borelName_mkReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mem_borelName_le_subset_omega' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mem_borelName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.profileName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.profilesName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.borelNameP' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mem_borelNameP_profileName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.iSup_mem_profilesName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.measGtP' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_countable_restrict_preimage' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.fullness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.measurableSet_Q' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.measure_Q_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.measure_diff_eq_top_of_mem_Q' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.Certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.tsum_volume_inter_Ico' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.exists_infinite_independent_of_certificate' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.ZFCCore.erdos501_deepmind_of_certificate' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.map_profileTest' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.binExp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.map_zero_shift' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.F_dyadic' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.map_binExp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.ZFCCore.map_profileTest_binExp' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Sem.erdos501' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.realize_Erdos501_f' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.forced_Erdos501_f_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.code_injective' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.realName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.bv_eq_realName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mem_Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.app2_opDot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.lt_ltDot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.isOp2_opDot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.assoc_opDot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.distrib_Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mulInv_timesDot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.total_ltDot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.addCompat_Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mulPos_Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.complete_Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.completeOrderedField_Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.erdosProperty_Rdot_of_forced' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.eq_of_forall_of_nat_mem_eq'' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_mkReal_of_subset_omega' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.decode_code' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.realName_of_mem_Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.app_valName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_seq_of_isFun' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.B_ext_realize' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.realize_omBody₃' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.outerMeasureLtOne_elim' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mem_openName_realName' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.succ_of_nat' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.outerMeasureLtOne_reading' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.volume_iUnion_Ioo_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.eq_of_forall_realName_mem_eq'' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.app_valSet' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.decodeFam_encodeFam' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.testPoint' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.openName_congr_ae' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_homogeneous_envelopes' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.MeasureAlgebra.exists_countable_iSup_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.measurable_firstIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_seq_of_fullness' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_selection_of_fullness' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.μS_preimage_xx' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.μS_section_ErelX_le_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.QX_pos' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_stage_selection' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.stage' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.ae_good' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.tj_not_mem_removedX' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.Xname' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.infinite_Xname' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.independent_Xname' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.exists_infinite_independent_name' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.RandomForcing.erdosProperty_Rdot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.completeOrderedField_and_erdosProperty_Rdot' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.Fld.opN' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Fld.add_assoc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Fld.zero_lt_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Fld.half_add_half' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Fld.dyR_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Fld.dyR_lt_of_cross' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Fld.arch' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Fld.exists_floor' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Fld.dense' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.rd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.psi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mem_iff_lt_dyReal' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.lt_dyR_le_mk_rd' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.mk_rd_le_lt_dyR' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.psi_isFun' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.app_psi_of' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.eq_of_app_psi' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.rd_lt_of_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.lt_of_rd_lt' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.eq_of_rd_eq' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.rd_add' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.rd_zero' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.rd_one' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.psi_surj' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.RandomForcing.psi_surj_app' depends on axioms: [propext, Classical.choice, Quot.sound]
+validation/Erdos501Audit.lean:322:46: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:326:16: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:326:54: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:344:40: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:344:60: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+|Erdos501_f| = 4223 characters
