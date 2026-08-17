@@ -25,7 +25,7 @@ mkdir -p "$TOOLS/bin"
 TOOLCHAIN="$(tr -d '[:space:]' < "$ROOT/lean-toolchain")"       # leanprover/lean4:v4.34.0-rc1
 LEAN_TAG="${TOOLCHAIN##*:}"                                       # v4.34.0-rc1
 
-COMPARATOR_REV="${COMPARATOR_REV:-main}"
+COMPARATOR_REV="${COMPARATOR_REV:-777e7f56119efc0fac34003db4efe831e0b53723}"
 LEAN4EXPORT_REV="${LEAN4EXPORT_REV:-$LEAN_TAG}"
 LANDRUN_REV="${LANDRUN_REV:-5ed4a3db3a4ad930d577215c6b9abaa19df7f99f}"   # pin used by leanprover/lean-eval
 NANODA_REV="${NANODA_REV:-68d5ca9db226849b41a6fff59d796ff19d0a8840}"     # pin used by leanprover/lean-eval
