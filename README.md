@@ -29,13 +29,14 @@ the judge.  See [`docs/COMPARATOR.md`](docs/COMPARATOR.md).
 
 | target | statement (informal) | status |
 |---|---|---|
-| `erdos501_closed_infinite` | closed `A_x` of measure `< 1` ⇒ infinite independent set | proved (integration of the verified file pending) |
-| `erdos501_closed_size3` | closed `A_x` of measure `< 1` ⇒ independent set of size 3 | proved (from the above) |
+| `erdos501_closed_infinite` | closed `A_x` of measure `< 1` ⇒ infinite independent set | proved (`Erdos501/Closed.lean`) |
+| `erdos501_closed_size3` | closed `A_x` of measure `< 1` ⇒ independent set of size 3 | proved (`Erdos501/Closed.lean`) |
 | `erdos501_hechler_of_CH` | `ℵ₁ = 𝔠` ⇒ a family of bounded null sets with no infinite independent set | proved (`Erdos501/Hechler.lean`) |
 | `erdos501_independent` | `independent ZFC Erdos501_f` | **open** (units H3, F3, F5, F6, F7 in `docs/STATUS.md`) |
 | `erdos501_sentence_faithful` | `stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` | **open** |
 
-`config-zfc.json` lists the first three; `config.json` all five.
+`config-zfc.json` lists the first three and **passes the comparator** (see
+`docs/COMPARATOR.md`); `config.json` lists all five and is the open target.
 
 ## Layout
 

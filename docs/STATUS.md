@@ -9,15 +9,15 @@ stated Mathlib pin.  The unified pin of this repository is
 
 | # | target | mathematics | proof status | in `config-zfc.json` |
 |---|---|---|---|---|
-| 1 | `erdos501_closed_infinite` | NPS87: closed, measure < 1 ⇒ infinite independent set | **verified** at 355bc1e as `Erdos501.erdos501` (session 2026‑08‑16); to be pasted into `Erdos501/Closed.lean` | yes |
-| 2 | `erdos501_closed_size3` | second question as asked | follows from 1 in `Solution.lean` (`Set.Infinite.exists_subset_ncard_eq`) | yes |
+| 1 | `erdos501_closed_infinite` | NPS87: closed, measure < 1 ⇒ infinite independent set | **verified in this repository** (`Erdos501/Closed.lean`, `Erdos501.erdos501_pairwise`; standard axioms) | yes |
+| 2 | `erdos501_closed_size3` | second question as asked | **verified in this repository** (`Erdos501.erdos501_ncard_three`) | yes |
 | 3 | `erdos501_hechler_of_CH` | Hechler: CH ⇒ ¬P (ZFC theorem, Mathlib level) | **verified in this repository** (`Erdos501/Hechler.lean`, re-derived 2026‑08‑17; standard axioms; comparator dry run passes on this target) | yes |
 | 4 | `erdos501_independent` | `independent ZFC Erdos501_f` (Flypitch sense) | **open** — see unit table below | no |
 | 5 | `erdos501_sentence_faithful` | `stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` | **open** (spec stated in `Bridge.lean` of the flypitch patch) | no |
 
-Until 4 and 5 are closed, `config.json` (all five) cannot pass; `config-zfc.json`
-is the challenge that should pass today (once the verified files are integrated
-and re-checked at the unified pin).
+Until 4 and 5 are closed, `config.json` (all five) cannot pass. **`config-zfc.json`
+passes**: comparator (HEAD `777e7f5`, lean4export at v4.34.0-rc1, non-sandboxed
+dry run, 2026‑08‑17) reports "Your solution is okay!" for targets 1–3.
 
 ## Independence proof — unit map
 
@@ -41,12 +41,12 @@ Units as in the paper's §6 (rev10) and the 2026‑08‑16 forcing session:
 
 | unit | content | status |
 |---|---|---|
-| F1 | Lemmas 2.1–2.2 (σ-finite selection, preservation) | verified (ZFC core, at 83a5988; port pending) |
-| F2 | Def. 3.1 certificate, Thm 3.2 `Prof(𝒜) → Free_ω(𝒜)` | verified (ZFC core, at 83a5988; port pending) |
-| F3 | Thm 4.3 Δ-system for 𝔠⁺ countable sets (ZFC, index 𝔠⁺ replaces ω₂+CH) | **statement only** (`delta_system_countable := sorry`); Mathlib has no Δ-system lemma. Plan: Kunen II.1.6 |
+| F1 | Lemmas 2.1–2.2 (σ-finite selection, preservation) | verified in this repository (`Erdos501/ZFCCore/Selection.lean`, ported to the unified pin) — and independently in the forcing tree (`Flypitch.Erdos501.ZFCCore`, patch pending) |
+| F2 | Def. 3.1 certificate, Thm 3.2 `Prof(𝒜) → Free_ω(𝒜)` | verified in this repository (`Erdos501/ZFCCore/Certificate.lean`, `prof_imp_free`) — and independently in the forcing tree (`exists_infinite_independent_of_certificate`, patch pending) |
+| F3 | Thm 4.3 Δ-system for 𝔠⁺ countable sets (ZFC, index 𝔠⁺ replaces ω₂+CH) | **proved** in the forcing tree (`DeltaSystem.lean`, per the 2026‑08‑17 session note; Zorn + pigeonhole on traces + ω₁-chain); patch pending |
 | F4 | Thms 4.1, 4.2, Prop. 4.4: countable support, Borel reading of names, homogeneous reading | proved (RandomForcing.lean, HomogeneousReading.lean; 4.4 modulo F3) |
-| F5 | Thm 4.5 fresh-profile fullness | proved at reading level (`exists_fresh_petal_of_fiber_pos`); literal `⊩ ν*(Ż) = 1` needs names for Borel sets — **open** |
-| F6 | Thm 5.1 assembly of the certificate inside V^𝔹 (names Ω̌, ν̌, Ż, ẋ_m, ċ_m; Boolean values of "λ*(A_y) < 1", "A_y ⊆ U(c)") | **not started** |
+| F5 | Thm 4.5 fresh-profile fullness | **proved** with names for Borel sets (`BorelNames.lean`: `borelName`, `profilesName`, `fullness`), per the 2026‑08‑17 session note; patch pending |
+| F6 | Thm 5.1 assembly of the certificate inside V^𝔹 (names Ω̌, ν̌, Ż, ẋ_m, ċ_m; Boolean values of "λ*(A_y) < 1", "A_y ⊆ U(c)") | **in progress** in the forcing tree: step S1 (binary expansion, (P2)) done (`BinaryExpansion.lean`); S2–S5 open — see `claude/erdos501-f6-f7-plan.md` in the project |
 | F7 | Transfer of Thm 3.2 into the forcing model (Boolean-valued re-development, or set-model run with canonical witnesses) | **not started** — see the rev10 audit §4 |
 | F8 | `erdos501_of_col_random : ⊤ ⊩[V 𝔹_col_random] Erdos501_f` (from F1–F7) and `neg_erdos501_f_unprovable` (derived, no extra sorry) | statement + derivation exist; proof open |
 | F9 | Modelling choice: product Col × Random instead of the iteration Col ∗ Random | justified informally (Col(ω₁,ℝ) is σ-closed ⇒ no new reals ⇒ the ω₂-random algebra of V[G] is the check name of the ground algebra with 𝔠⁺ coordinates); to be documented/proved as needed |

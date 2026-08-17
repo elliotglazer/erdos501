@@ -34,17 +34,14 @@ theorem erdos501_closed_infinite :
       (∀ x, IsClosed (A x)) →
       (∀ x, volume (A x) < 1) →
       ∃ X : Set ℝ, X.Infinite ∧ X.Pairwise (fun x y => x ∉ A y) :=
-  fun A hA hvol => Erdos501.erdos501_closed_infinite A hA hvol
+  fun A hA hvol => Erdos501.erdos501_pairwise A hA hvol
 
 theorem erdos501_closed_size3 :
     ∀ (A : ℝ → Set ℝ),
       (∀ x, IsClosed (A x)) →
       (∀ x, volume (A x) < 1) →
-      ∃ X : Set ℝ, 3 ≤ X.ncard ∧ X.Pairwise (fun x y => x ∉ A y) := by
-  intro A hA hvol
-  obtain ⟨X, hXinf, hXind⟩ := Erdos501.erdos501_closed_infinite A hA hvol
-  obtain ⟨T, hTX, -, hT3⟩ := hXinf.exists_subset_ncard_eq 3
-  exact ⟨T, hT3.ge, hXind.mono hTX⟩
+      ∃ X : Set ℝ, 3 ≤ X.ncard ∧ X.Pairwise (fun x y => x ∉ A y) :=
+  fun A hA hvol => Erdos501.erdos501_ncard_three A hA hvol
 
 /-! ### First question: Hechler's counterexample under `CH` -/
 

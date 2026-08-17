@@ -10,9 +10,7 @@ import Erdos501.Closed
 -- First question, negative direction: Hechler's counterexample under CH.
 import Erdos501.Hechler
 -- ZFC core of the random-reals argument (paper §2–3): certificate ⇒ free set.
-import Erdos501.ZFCCore.IcoPartition
-import Erdos501.ZFCCore.Selection
-import Erdos501.ZFCCore.Certificate
+import Erdos501.ZFCCore
 -- First-order rendering of the first question and its standard interpretation.
 import Erdos501.Sentence
 import Erdos501.Bridge

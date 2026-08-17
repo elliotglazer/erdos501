@@ -1,20 +1,36 @@
 /-
-Copyright (c) 2026 Elliot Glazer. All rights reserved.
-Released under Apache 2.0 license as described in the file LICENSE.
-
-# ZFC core of the random-reals argument — `ZFCCore/IcoPartition`
-
-PENDING INTEGRATION of `erdos501-zfc-core.zip` (session 2026-08-16; sorry-free
-at Lean v4.30.0-rc2 / Mathlib 83a5988; to be ported to Mathlib 355bc1e).
-Contents to land in this directory:
-* IcoPartition — the `Ico m (m+1)` partition of ℝ used to derive the column
-  bound μ(E^s) ≤ 1 and null fibres of x from (P2)/(P3);
-* Selection    — Lemma 2.1 `Erdos501.pos_measure_Q` (σ-finite positive-measure
-  selection, Tonelli double count) and Lemma 2.2
-  `Erdos501.infinite_measure_preservation`;
-* Certificate  — Def. 3.1 `Erdos501.Certificate`, `Erdos501.Free`,
-  `Erdos501.Prof`, Theorem 3.2 `Erdos501.prof_imp_free` / `prof_imp_free'`.
+  The half-open unit intervals `Ico m (m+1)`, `m : ℤ`, partition `ℝ`.
+  Used to turn the per-block distribution hypothesis (P2) into
+  `∑' m, volume (W ∩ Ico m (m+1)) = volume W`.
 -/
-import Mathlib.MeasureTheory.Measure.Prod
-import Mathlib.MeasureTheory.Measure.Count
-import Mathlib.MeasureTheory.Integral.Lebesgue.Countable
+import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
+
+open Set
+
+namespace Erdos501
+
+/-- The integer unit intervals cover `ℝ`. -/
+theorem iUnion_Ico_int : ⋃ m : ℤ, Set.Ico (m : ℝ) ((m : ℝ) + 1) = univ := by
+  apply eq_univ_of_forall
+  intro r
+  rw [mem_iUnion]
+  refine ⟨⌊r⌋, ?_, ?_⟩
+  · exact Int.floor_le r
+  · have := Int.lt_floor_add_one r
+    linarith
+
+/-- The integer unit intervals are pairwise disjoint. -/
+theorem pairwise_disjoint_Ico_int :
+    Pairwise (Function.onFun Disjoint fun m : ℤ => Set.Ico (m : ℝ) ((m : ℝ) + 1)) := by
+  intro m n hmn
+  rw [Function.onFun, Set.disjoint_left]
+  intro r hrm hrn
+  rw [mem_Ico] at hrm hrn
+  -- m ≤ r < m+1 and n ≤ r < n+1 force m = n
+  have h1 : (m : ℝ) < (n : ℝ) + 1 := lt_of_le_of_lt hrm.1 hrn.2
+  have h2 : (n : ℝ) < (m : ℝ) + 1 := lt_of_le_of_lt hrn.1 hrm.2
+  have h1' : m < n + 1 := by exact_mod_cast h1
+  have h2' : n < m + 1 := by exact_mod_cast h2
+  omega
+
+end Erdos501
