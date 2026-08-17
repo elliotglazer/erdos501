@@ -63,7 +63,7 @@ are isomorphic to `ℝ` (Mathlib: `LinearOrderedField.inducedOrderRingIso`),
 
 | item | status |
 |---|---|
-| Flypitch4 port vendored (`ianklatzco/flypitch@ad649f8`, `flypitch4/`) | done (files copied; port to Mathlib 355bc1e pending: see `docs/PROVENANCE.md`) |
+| Flypitch4 port vendored (`ianklatzco/flypitch@ad649f8`, `flypitch4/`) | **done and forward-ported to the unified pin**: full `lake build`; `independence_of_CH` and all endpoints use only the standard axioms (`third_party/flypitch4/validation/AxiomAudit.lean`); see `docs/PORTING-NOTES.md` |
 | Random algebra / measure algebra additions (`MeasureAlgebra.lean`, `RandomAlgebra.lean`, `ForcingRandom.lean`, `SummaryRandom.lean`, `independence_of_CH_random`) | pending integration of the flypitch patch |
 | Comparator files (`Challenge.lean`, `Solution.lean`, `config.json`, `config-zfc.json`) | written |
 | CI (`.github/workflows/ci.yml`): build + axiom audit + comparator on `config-zfc.json` | written, untested |
