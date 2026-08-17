@@ -31,7 +31,7 @@ the judge.  See [`docs/COMPARATOR.md`](docs/COMPARATOR.md).
 |---|---|---|
 | `erdos501_closed_infinite` | closed `A_x` of measure `< 1` ⇒ infinite independent set | proved (integration of the verified file pending) |
 | `erdos501_closed_size3` | closed `A_x` of measure `< 1` ⇒ independent set of size 3 | proved (from the above) |
-| `erdos501_hechler_of_CH` | `ℵ₁ = 𝔠` ⇒ a family of bounded null sets with no infinite independent set | proved (integration pending) |
+| `erdos501_hechler_of_CH` | `ℵ₁ = 𝔠` ⇒ a family of bounded null sets with no infinite independent set | proved (`Erdos501/Hechler.lean`) |
 | `erdos501_independent` | `independent ZFC Erdos501_f` | **open** (units H3, F3, F5, F6, F7 in `docs/STATUS.md`) |
 | `erdos501_sentence_faithful` | `stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` | **open** |
 

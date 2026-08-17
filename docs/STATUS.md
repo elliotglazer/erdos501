@@ -11,7 +11,7 @@ stated Mathlib pin.  The unified pin of this repository is
 |---|---|---|---|---|
 | 1 | `erdos501_closed_infinite` | NPS87: closed, measure < 1 ⇒ infinite independent set | **verified** at 355bc1e as `Erdos501.erdos501` (session 2026‑08‑16); to be pasted into `Erdos501/Closed.lean` | yes |
 | 2 | `erdos501_closed_size3` | second question as asked | follows from 1 in `Solution.lean` (`Set.Infinite.exists_subset_ncard_eq`) | yes |
-| 3 | `erdos501_hechler_of_CH` | Hechler: CH ⇒ ¬P (ZFC theorem, Mathlib level) | **verified** at 355bc1e as `hechler_of_CH` (`Hechler501FC_master.lean`); to be pasted into `Erdos501/Hechler.lean` | yes |
+| 3 | `erdos501_hechler_of_CH` | Hechler: CH ⇒ ¬P (ZFC theorem, Mathlib level) | **verified in this repository** (`Erdos501/Hechler.lean`, re-derived 2026‑08‑17; standard axioms; comparator dry run passes on this target) | yes |
 | 4 | `erdos501_independent` | `independent ZFC Erdos501_f` (Flypitch sense) | **open** — see unit table below | no |
 | 5 | `erdos501_sentence_faithful` | `stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` | **open** (spec stated in `Bridge.lean` of the flypitch patch) | no |
 
@@ -64,6 +64,7 @@ are isomorphic to `ℝ` (Mathlib: `LinearOrderedField.inducedOrderRingIso`),
 | item | status |
 |---|---|
 | Flypitch4 port vendored (`ianklatzco/flypitch@ad649f8`, `flypitch4/`) | **done and forward-ported to the unified pin**: full `lake build`; `independence_of_CH` and all endpoints use only the standard axioms (`third_party/flypitch4/validation/AxiomAudit.lean`); see `docs/PORTING-NOTES.md` |
+| `Erdos501/Bridge.lean`: `erdos501_deepmind`, `stdStructure` | written (real definitions); `Erdos501/Sentence.lean`: `Erdos501_f` is a `sorry` PLACEHOLDER until the patch file is integrated |
 | Random algebra / measure algebra additions (`MeasureAlgebra.lean`, `RandomAlgebra.lean`, `ForcingRandom.lean`, `SummaryRandom.lean`, `independence_of_CH_random`) | pending integration of the flypitch patch |
-| Comparator files (`Challenge.lean`, `Solution.lean`, `config.json`, `config-zfc.json`) | written |
+| Comparator files (`Challenge.lean`, `Solution.lean`, `config.json`, `config-zfc.json`) | written; `lake build` of Challenge/Solution passes; comparator (HEAD `777e7f5`, lean4export at v4.34.0-rc1, non-sandboxed dry run) accepts a config with `erdos501_hechler_of_CH` — "Your solution is okay!" |
 | CI (`.github/workflows/ci.yml`): build + axiom audit + comparator on `config-zfc.json` | written, untested |

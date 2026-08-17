@@ -56,9 +56,9 @@ theorem hechler_of_CH (hCH : (ℵ₁ : Cardinal.{u}) = 𝔠) :
   -- Initial segments of `ω₁` are countable.
   have hIio : ∀ i : (ℵ₁ : Cardinal.{0}).ord.ToType, (Iio i).Countable := by
     intro i
-    rw [Cardinal.countable_iff_lt_aleph_one]
     have h := Cardinal.mk_Iio_lt i (by rw [Cardinal.mk_ord_toType, Ordinal.type_toType])
-    rwa [Cardinal.mk_ord_toType] at h
+    rw [Cardinal.mk_ord_toType] at h
+    exact Cardinal.le_aleph0_iff_set_countable.mp (Cardinal.lt_aleph_one_iff.mp h)
   -- The family.
   set A : ℝ → Set ℝ := fun x => {y | e y < e x ∧ |y| ≤ |x| + 1} with hA
   refine ⟨A, ?_, ?_, ?_⟩
@@ -86,7 +86,7 @@ theorem hechler_of_CH (hCH : (ℵ₁ : Cardinal.{u}) = 𝔠) :
       have h2 : e (wf.min Y hY) < e y :=
         lt_of_le_of_ne (not_lt.mp h1) (fun h => hne (e.injective h).symm)
       have h3 : wf.min Y hY ∉ A y := hXind (hYX hmin) (hYX hy) hne.symm
-      simp only [hA, mem_setOf_eq, not_and, not_le] at h3
+      simp only [hA, mem_ofPred_eq, not_and, not_le] at h3
       exact h3 h2
     -- Iterate: for every `n` there is an infinite `Y ⊆ X` with `|y| + n ≤ |m|` on `Y`.
     set m := wf.min X hXinf.nonempty with hm
