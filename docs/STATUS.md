@@ -22,17 +22,20 @@ lean4export at v4.34.0-rc1, non-sandboxed dry run, 2026‑08‑17 — "Lean defa
 kernel accepts the solution / Your solution is okay!".
 
 Axiom audit of the targets: `docs/audits/2026-08-17-axiom-audit-targets-355bc1e.txt`
-(`validation/AxiomAudit.lean`).  Audit of the whole forcing tree (197
+(`validation/AxiomAudit.lean`).  Audit of the whole forcing tree (194
 declarations): `docs/audits/2026-08-17-erdos501-forcing-audit-355bc1e.txt`
 (`validation/Erdos501Audit.lean`) — identical, declaration by declaration, to
 the audit at the original pin 83a5988
-(`third_party/flypitch4/erdos501-audit-output-83a5988.txt`).  The only
-declarations in the whole repository depending on `sorryAx` are
-`Flypitch.Erdos501.erdos501_of_col_random` and its corollary
-`neg_Erdos501_f_unprovable_of_col_random` (the paper's literal two-step forcing
-Col × Random, stated in `Flypitch4/Erdos501/ColRandom.lean` and **not used**:
-the formalized route uses the pure random algebra with `𝔠⁺` coordinates,
-`RandomIndex`).  No target depends on them.
+(`third_party/flypitch4/erdos501-audit-output-83a5988.txt`, 197 declarations)
+except for the three declarations removed here (below).  **No declaration in
+the repository depends on `sorryAx`**; the only `sorry`s are the statements of
+`Challenge.lean`.  (The paper's literal two-step forcing Col × Random had been
+stated with `sorry` as `erdos501_of_col_random` in `Flypitch4/Erdos501/ColRandom.lean`,
+with the corollary `neg_Erdos501_f_unprovable_of_col_random` and the trivial
+`V_col_random_models_ZFC`; it was never used — the formalized route uses the pure
+random algebra with `𝔠⁺` coordinates, `RandomIndex` — and was removed on
+2026‑08‑17.  The algebra `𝔹_col_random` itself is kept as a definition, for
+reference.)
 
 ## Independence proof — unit map
 
@@ -68,7 +71,7 @@ All in `Flypitch4/Erdos501/` (namespace `Flypitch.Erdos501`):
 | F7 | Transfer of Thm 3.2 into the forcing model: `erdosProperty_Rdot`, `erdos501_ex_forced` | `Assembly.lean`, `Main.lean` |
 | F8 | Universal form: every internal complete ordered field is isomorphic to `Rdot` (dyadics, Archimedean property, `psi`), transport of the Erdős property | `InternalField.lean`, `InternalIso.lean`, `Transfer.lean` (`erdos501_forced`) |
 | — | endpoints: `erdos501_of_random : ⊤ ⊩[V 𝔹_random_succ_continuum] Erdos501_f`, `neg_Erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' ∼Erdos501_f)` | `Main.lean` |
-| F9 | Modelling choice: the pure random algebra with `𝔠⁺` coordinates replaces the paper's Col ∗ Random | the route needs no collapse; the literal Col × Random assertion `erdos501_of_col_random` (`ColRandom.lean`) is stated with `sorry` and unused |
+| F9 | Modelling choice: the pure random algebra with `𝔠⁺` coordinates replaces the paper's Col ∗ Random | the route needs no collapse; the paper's Col × Random algebra `𝔹_col_random` is only defined (`ColRandom.lean`), nothing is proved about it |
 
 ### Faithfulness (target 7) — **complete**
 

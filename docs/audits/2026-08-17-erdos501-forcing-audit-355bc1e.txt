@@ -2,12 +2,6 @@
 'Flypitch.Erdos501.𝔹_col_random' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.𝔹_col_random.instNontrivialCBA' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.mk_RandomIndex' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Flypitch.Erdos501.V_col_random_models_ZFC' depends on axioms: [propext, Classical.choice, Quot.sound]
-'Flypitch.Erdos501.erdos501_of_col_random' depends on axioms: [propext, sorryAx, Classical.choice, Quot.sound]
-'Flypitch.Erdos501.neg_Erdos501_f_unprovable_of_col_random' depends on axioms: [propext,
- sorryAx,
- Classical.choice,
- Quot.sound]
 'Flypitch.Erdos501.Erdos501_ex_f' depends on axioms: [propext, Quot.sound]
 'Flypitch.Erdos501.realize_Erdos501_ex_f' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.forced_Erdos501_ex_f_of' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -234,11 +228,11 @@
 'Flypitch.Erdos501.RandomForcing.rd_one' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.RandomForcing.psi_surj' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.RandomForcing.psi_surj_app' depends on axioms: [propext, Classical.choice, Quot.sound]
-validation/Erdos501Audit.lean:323:46: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
-validation/Erdos501Audit.lean:327:16: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
-validation/Erdos501Audit.lean:327:54: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
-validation/Erdos501Audit.lean:345:40: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
-validation/Erdos501Audit.lean:345:60: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:320:46: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:324:16: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:324:54: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:342:40: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:342:60: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
 'Flypitch.Erdos501.Hechler.no_descent' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.CheckReals.completeOrderedField_Rc' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.CheckReals.completeOrderedField_Rc_collapse' depends on axioms: [propext,

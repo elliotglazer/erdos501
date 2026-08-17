@@ -75,7 +75,8 @@ Flypitch4.lean, Flypitch4/       vendored Lean 4 port of Flypitch (Han–van Doo
     Hechler                          internal complete ordered field, Hechler's family in V^{𝔹_collapse}:
                                      `neg_erdos501_forced_collapse`, `Erdos501_f_unprovable`,
                                      `independence_of_Erdos501`
-    ColRandom                        the literal Col × Random algebra (statement only, off-route)
+    ColRandom                        `RandomIndex` (𝔠⁺), `𝔹_random_succ_continuum`; the paper's Col × Random
+                                     algebra (definition only, for reference)
 third_party/flypitch4/           upstream license, README, validation notes, audit at 83a5988
 validation/                      `#print axioms` scripts (AxiomAudit: targets; Erdos501Audit: forcing tree)
 scripts/                         install/run comparator, axiom audit
@@ -92,10 +93,9 @@ scripts/check-axioms.sh          # axioms of every target (sorryAx = not closed)
 ```
 
 The proofs are pure Lean; no `native_decide`, no extra axioms.  Every target
-depends only on `propext`, `Classical.choice`, `Quot.sound`.  The only
-declarations in the repository depending on `sorry` are the unused, off-route
-assertion `Flypitch.Erdos501.erdos501_of_col_random` (the paper's literal
-Col × Random two-step forcing) and its corollary; no target depends on them.
+depends only on `propext`, `Classical.choice`, `Quot.sound`, and no declaration
+in the repository depends on `sorryAx` (the only `sorry`s are the statements of
+`Challenge.lean`).
 
 ## Mathematical sources
 

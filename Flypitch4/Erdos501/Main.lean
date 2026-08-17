@@ -35,9 +35,8 @@ All of these are proved without `sorry`.
 
 Note that no collapse is needed: the paper's `Col(ω₁, ℝ)` step served to obtain `CH` for the
 Δ-system argument at `ω₂`, which the formalization replaces by using `𝔠⁺` random reals directly
-(`exists_homogeneous_envelopes`, `Envelopes.lean`).  The two-step forcing `𝔹_col_random` of
-`ColRandom.lean` and the assertion `erdos501_of_col_random` about it are kept as the literal
-rendering of the paper's statement; they are not on the formalized route.
+(`exists_homogeneous_envelopes`, `Envelopes.lean`).  The paper's two-step forcing notion
+`𝔹_col_random` is defined in `ColRandom.lean` for reference only; nothing is proved about it.
 -/
 
 open Fol Flypitch bSet

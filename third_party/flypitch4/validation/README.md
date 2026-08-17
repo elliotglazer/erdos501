@@ -29,7 +29,7 @@ weaken the theorem, and which proof bridges deserve the most scrutiny.
 - `DependencyCheck.lean`: Lean script showing that the random-algebra proof of
   `¬ (ZFC ⊢ₛ' CH_f)` does not depend on the Cohen algebra.
 - `Erdos501Audit.lean`, `Erdos501Print.lean`: axiom/shape checks and pretty-printing for the
-  Erdős #501 sentence `Erdos501_f`, the (sorried) assertion `erdos501_of_col_random`, and the
+  Erdős #501 sentence `Erdos501_f` and the
   proof units (F1)–(F5) of
   `Flypitch4/Erdos501/{ZFCCore,RandomForcing,DeltaSystem,HomogeneousReading,BorelNames,BinaryExpansion}.lean`,
   the Boolean value of `Erdos501_f` (`Semantics.lean`), the internal reals (`InternalReals.lean`) and

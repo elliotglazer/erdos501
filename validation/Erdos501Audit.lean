@@ -27,8 +27,8 @@ import Flypitch4.PrintFormula
 Run with `lake env lean validation/Erdos501Audit.lean`.
 
 * The sentence `Erdos501_f` is a closed, axiom-free object (`#print axioms` reports nothing).
-* The forcing notion `𝔹_col_random` is a nontrivial complete Boolean algebra (no axioms beyond the
-  standard ones).
+* The paper's forcing notion `𝔹_col_random` (defined for reference in `ColRandom.lean`, unused) is
+  a nontrivial complete Boolean algebra (no axioms beyond the standard ones).
 * **Main theorems** (`Main.lean`), all **fully proved** (axioms `[propext, Classical.choice, Quot.sound]`):
   `erdos501_ex_forced : 𝔠⁺ ≤ #ι → ⊤ ⊩[V (randomAlgebra ι)] Erdos501_ex_f`,
   `erdos501_ex_of_random`, `neg_Erdos501_ex_f_unprovable : ¬ (ZFC ⊢ₛ' ∼Erdos501_ex_f)` (existential
@@ -52,9 +52,9 @@ Run with `lake env lean validation/Erdos501Audit.lean`.
   `eq_of_app_psi`), which preserves and reflects `<` (`rd_lt_of_lt`, `lt_of_rd_lt`), is injective
   (`eq_of_rd_eq`), additive (`rd_add`), sends `zero, one` to `0, 1` (`rd_zero`, `rd_one`) and is
   surjective (`psi_surj`, `psi_surj_app`); no `sorryAx`.
-* The assertion `erdos501_of_col_random` (the paper's literal two-step forcing) is stated but not
-  proved: it depends on `sorryAx`, and so does its corollary `neg_Erdos501_f_unprovable_of_col_random`;
-  it is not on the formalized route.  These are the ONLY declarations depending on `sorryAx`.
+* No declaration depends on `sorryAx`.  (The literal assertion `erdos501_of_col_random` about the
+  paper's two-step forcing, formerly stated with `sorry` in `ColRandom.lean`, was removed on
+  2026-08-17; the formalized route uses the random algebra alone.)
 * **The bridge** (`Bridge.lean`), fully proved: `stdStructure_realize_Erdos501_f_iff :
   stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` — in the standard model `ZFSet` the sentence holds
   iff DeepMind's proposition holds.  Its ingredients: the two-valued unfolding `realize_Erdos501_f_std`
@@ -108,9 +108,6 @@ open Fol Flypitch Flypitch.Erdos501
 #print axioms Flypitch.Erdos501.𝔹_col_random
 #print axioms Flypitch.Erdos501.𝔹_col_random.instNontrivialCBA
 #print axioms Flypitch.Erdos501.mk_RandomIndex
-#print axioms Flypitch.Erdos501.V_col_random_models_ZFC
-#print axioms Flypitch.Erdos501.erdos501_of_col_random
-#print axioms Flypitch.Erdos501.neg_Erdos501_f_unprovable_of_col_random
 -- MAIN THEOREMS (`Main.lean`): the existential form, fully proved
 #print axioms Flypitch.Erdos501.Erdos501_ex_f
 #print axioms Flypitch.Erdos501.realize_Erdos501_ex_f
@@ -349,7 +346,6 @@ end
 -- shape checks
 example : sentence L_ZFC := Erdos501_f
 example : sentence L_ZFC := Erdos501_ex_f
-example : Fol.forced_in (⊤ : 𝔹_col_random) (V 𝔹_col_random) Erdos501_f := erdos501_of_col_random
 example : ¬ Fol.SentTheory.sprovable ZFC (bd_not Erdos501_f : sentence L_ZFC) :=
   neg_Erdos501_f_unprovable
 -- the main theorems

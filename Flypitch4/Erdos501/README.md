@@ -50,11 +50,12 @@ The paper's assertion in its literal form,
 > **Assertion.** Forcing with `Col(ω₁, ℝ)` and then adding `ω₂` random reals produces a model of
 > `ZFC` in which the first question of Erdős problem #501 has a positive answer,
 
-is stated as `erdos501_of_col_random : ⊤ ⊩[V 𝔹_col_random] Erdos501_f := sorry` (`ColRandom.lean`).
-It is *not* on the formalized route: the collapse `Col(ω₁, ℝ)` served in the paper to obtain `CH`
-for the Δ-system argument at `ω₂`, which the formalization replaces by using `𝔠⁺` random reals over
-the ground model directly (`exists_homogeneous_envelopes`), so that no collapse is needed for the
-consistency result.
+is *not* on the formalized route (its Boolean algebra `𝔹_col_random` is defined in
+`ColRandom.lean` for reference only; a `sorry`-stated version of the assertion was removed on
+2026‑08‑17): the collapse `Col(ω₁, ℝ)` served in the paper to obtain `CH` for the Δ-system
+argument at `ω₂`, which the formalization replaces by using `𝔠⁺` random reals over the ground model
+directly (`exists_homogeneous_envelopes`), so that no collapse is needed for the consistency
+result.
 
 ## Files
 
@@ -64,7 +65,7 @@ consistency result.
 | `Main.lean` | **The main theorems** (see above): `erdos501_ex_forced`, `erdos501_ex_of_random`, `neg_Erdos501_ex_f_unprovable`, `erdos501_of_random`, `neg_Erdos501_f_unprovable`, all proved. |
 | `Transfer.lean` | Unit (F8), part 3: **transport of the Erdős property along `psi`**.  The introduction rule `outerMeasureLtOne_of_readings` for `Sem.outerMeasureLtOne Rdot …` from ground sequences of readings (the converse of the S3 reading theorem), the transported family `Atr F A = {(psi r, psi[A(r)]) | r ∈ F.R}` — a function `Rdot → 𝒫 Rdot` (`Atr_isFun`) whose values have outer measure `< 1` (`Atr_values`: the covering sequences of `A(r)` in `F` are read through `psi`, `readings_*`) — Theorem 3.2 in `V^{randomAlgebra ι}` (`exists_infinite_independent_of_omlt1`) applied to `Atr F A`, and the pull-back `Xpb F X' = {r | psi r ∈ X'}`, infinite (`infinite_Xpb`) and independent for `A` (`independent_Xpb`).  Result: **`erdosProperty_of_COF : 𝔠⁺ ≤ #ι → Γ ≤ F.COF → Γ ≤ Sem.erdosProperty F.R F.plus F.ltR F.zero F.one`** for every internal complete ordered field, and **`erdos501_forced : 𝔠⁺ ≤ #ι → ⊤ ⊩[V (randomAlgebra ι)] Erdos501_f`**. **Proved** (920 lines). |
 | `InternalField.lean` | Unit (F8), part 1 (`PLAN.md` §6): **internal complete ordered fields**.  For six names `F = (R, plus, times, ltR, zero, one)` with `Γ ≤ F.COF`: names for the operations by the maximum principle (`Fld.add`, `Fld.mul`, `Fld.neg`, `Fld.inv`), the ordered abelian group laws (`add_assoc`, `add_comm`, `add_zero`, `add_neg`, cancellation, `add_lt_add_right`, …), `zero_lt_one`, halving (`half_add_half`), the internal naturals `mulN n x`, halves `hR k = 1/2^k`, dyadics `dyR m k = m/2^k` with their order (`dyR_lt_of_cross`, `not_dyR_lt_of_cross`) and additive arithmetic (`dyR_add`, `dyR_neg`, `dyR_double`), the **Archimedean property** `arch` (from `Sem.complete`), the floor `exists_floor` and the **density of the dyadics** `dense`.  Generic in `β`; the equivalence `x ≡[Γ] y` (`Γ ≤ x =ᴮ y`) is usable in `calc`. **Proved** (1300 lines). |
-| `ColRandom.lean` | The index set `RandomIndex` (`#RandomIndex = 𝔠⁺`) and the random algebra `𝔹_random_succ_continuum = randomAlgebra RandomIndex`; the complete Boolean algebra `𝔹_col_random` of the paper's two-step forcing, and the literal assertion `erdos501_of_col_random : ⊤ ⊩[V 𝔹_col_random] Erdos501_f := sorry` with its consequence `neg_Erdos501_f_unprovable_of_col_random` (not on the formalized route). |
+| `ColRandom.lean` | The index set `RandomIndex` (`#RandomIndex = 𝔠⁺`) and the random algebra `𝔹_random_succ_continuum = randomAlgebra RandomIndex` (used by `Main.lean`); for reference, the complete Boolean algebra `𝔹_col_random` of the paper's two-step forcing (defined, unused; nothing is proved about it). |
 | `Bridge.lean` | **The bridge**: `stdStructure_realize_Erdos501_f_iff : stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind`, the faithfulness of the rendering, **proved** from the three files below. |
 | `StdSemantics.lean` | Bridge, part 1: `erdos501_deepmind : Prop` (the DeepMind proposition verbatim), the standard structure `stdStructure` on Mathlib's `ZFSet` (`∅`, Kuratowski pairs, `ω`, `𝒫`, `⋃`, `∈`), the two-valued predicates `StdSem.*` on `ZFSet` mirroring the blocks of `Sentence.lean`, and the computation `realize_Erdos501_f_std : (stdStructure ⊨ₘ Erdos501_f) ↔ StdSem.erdos501` (the analogue of `Semantics.lean`); a `ZFSet` toolkit (the finite ordinals `natZ n`, `mem_omega_iff`, values `fval`/`opval` of internal functions/operations). **Proved.** |
 | `RealsInZFSet.lean` | Bridge, part 2 (`StdSem.erdos501 → erdos501_deepmind`): the coding `cutZ r` of a real by its rational cut (injective), the complete ordered field `(Rz, plusZ, timesZ, ltZ, zeroZ, oneZ)` inside `ZFSet` (`completeOrderedField_Rz`, all twenty axioms), the copies `setZ`, `famZ`, `seqZ` of sets, families and sequences of reals, the **covering lemma** `exists_cover_of_volume_lt_one` (a set of reals of Lebesgue outer measure `< 1` is covered by open intervals `(aₙ, bₙ)` with all partial sums of lengths `≤ r < 1`, extracted from the definition of the Lebesgue outer measure as `OuterMeasure.ofFunction`), the internal hypotheses for `famZ A` (`bounded_setZ`, `outerMeasureLtOne_setZ`), and the pull-back of an internal infinite independent set (`erdos501_deepmind_of_std`). **Proved.** |
@@ -87,7 +88,7 @@ consistency result.
 | `InternalIso.lean` | Unit (F8), part 2: **the internal isomorphism `F ≅ Rdot`**.  For an internal complete ordered field `F` on `Γ` and a name `r ∈ F.R`, the **reading** `rd F r x = sup {m/2^k | x ∈ ‖dyR m k < r‖}` (measurable representatives `cutSet` of the Boolean values of the dyadic comparisons); on the good event `cutGood` the reading has exactly that cut (`mem_iff_lt_dyReal`), giving the **reading lemma** `Γ ⊓ ‖dyR d < r‖ = Γ ⊓ [dyVal d < rd F r]` (`lt_dyR_le_mk_rd`, `mk_rd_le_lt_dyR`).  The name `psi F = {(r, realName (rd F r)) | r ∈ F.R}` is a function `F.R → Rdot` (`psi_isFun`, `app_psi_of`, `eq_of_app_psi`), preserves and reflects `<` (`rd_lt_of_lt`, `lt_of_rd_lt`), is injective (`eq_of_rd_eq`), additive (`rd_add`: `x + y = z` gives `rd z = rd x + rd y` a.e., by comparing dyadic cuts), sends `zero, one` to `0, 1` (`rd_zero`, `rd_one`), and is surjective (`psi_surj`: the internal completeness of `F` applied to the cut set `cutName F g` of a real name `g`). **Proved** (1130 lines). |
 | `PLAN.md` | Design of the remaining units (F6) Theorem 5.1 and the transfer (F7): the internal objects still to be built and size estimates. |
 | `BorelNames.lean` | **Names for Borel sets** of reals (`borelName`) and of profiles (`borelNameP`) in `V (randomAlgebra ι)`, the profile names `profileName`/`profilesName`, the evaluation lemmas `‖mkReal G ∈ Ḃ‖ = [{x | (x↾T, G x) ∈ B}]`, `‖ż ∈ Ḃ‖ = [{x | (x↾T, ĝ ∘ π) ∈ B'}]`, and unit (F5), Theorem 4.5, **with names**: `‖ν(Ḃ) > ε‖ ≤ ‖Ḃ ∩ Ż ≠ ∅‖` (`fullness`). All proved. |
-| `../../validation/Erdos501Audit.lean` | `#print axioms` of everything (`Erdos501_f` and `𝔹_col_random` use no `sorry`; only the assertion and its corollary depend on `sorryAx`), shape checks, and the size of the printed sentence. |
+| `../../validation/Erdos501Audit.lean` | `#print axioms` of everything (no declaration depends on `sorryAx`), shape checks, and the size of the printed sentence. |
 | `../../validation/Erdos501Print.lean` | Pretty-prints every building block of `Erdos501_f` (`str_formula`), for auditing the sentence by eye. |
 
 ## How the DeepMind proposition is rendered (`Erdos501_f`)
@@ -130,9 +131,10 @@ The product is used because, `Col(ω₁, ℝ)` being σ-closed, the `ω₂`-rand
 collapse extension* (`ω₂^{V[G]} = (𝔠⁺)^V`) is the check name of the ground-model measure algebra
 with `𝔠⁺` coordinates, so the two-step iteration is (densely) this product; see the module
 docstring of `ColRandom.lean`.  This identification is a theorem about `Col(ω₁, ℝ)` that is built
-into the *definition* of `𝔹_col_random`; stating the assertion literally with an iteration would
+into the *definition* of `𝔹_col_random`; defining the forcing notion literally as an iteration would
 require a formalization of two-step iterations `𝔹 ∗ Ċ` with names for Boolean algebras inside
-`V 𝔹`, which Flypitch does not have.
+`V 𝔹`, which Flypitch does not have.  Nothing is proved about `𝔹_col_random`; it documents the
+relation between the paper's forcing and the algebra `𝔹_random_succ_continuum` actually used.
 
 ## The proof: units (F3)–(F5) of the paper's plan
 
@@ -415,11 +417,11 @@ we use `𝔠 < 𝔠⁺` (`𝔠^{ℵ₀} = 𝔠`, a theorem of `ZFC`).
 **What remains** (see `PLAN.md`; steps S1–S6 and S8 = (F8) are done; both sentences are fully
 proved to be forced by `𝔠⁺` random reals, both relative-consistency theorems are `sorry`-free, the
 bridge `stdStructure_realize_Erdos501_f_iff` is proved, and **the first question is proved
-independent of `ZFC`**, `independence_of_Erdos501`).  Only the paper's literal two-step
-forcing `𝔹_col_random` (`erdos501_of_col_random`) is left as `sorry`: it would need the theory of
-names in the product `Col × Random` (a σ-closed factor adds no reals, so the reals of the product
-extension are those of the random extension); it is not needed for the consistency result and is
-not pursued.
+independent of `ZFC`**, `independence_of_Erdos501`).  Nothing is left as `sorry`.  The paper's
+literal two-step forcing `𝔹_col_random` is only defined: proving `Erdos501_f` forced by it would
+need the theory of names in the product `Col × Random` (a σ-closed factor adds no reals, so the
+reals of the product extension are those of the random extension); it is not needed for the
+consistency result and is not pursued.
 
 ## Status
 
@@ -434,6 +436,4 @@ not pursued.
 the bridge `stdStructure_realize_Erdos501_f_iff` (`StdSemantics.lean`, `RealsInZFSet.lean`,
 `ZFSetCOF.lean`, `Bridge.lean`); and so is the **independence theorem
 `independence_of_Erdos501 : independent ZFC Erdos501_f`** with its ¬CH direction
-(`OmegaClosed.lean`, `CheckReals.lean`, `Hechler.lean`).  The only `sorry` in the repository is the
-literal assertion `erdos501_of_col_random` about the paper's two-step forcing (off-route; its
-corollary is `neg_Erdos501_f_unprovable_of_col_random`).
+(`OmegaClosed.lean`, `CheckReals.lean`, `Hechler.lean`).  There is no `sorry` in the development.

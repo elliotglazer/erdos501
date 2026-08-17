@@ -11,8 +11,8 @@ import Flypitch4.ForcingRandom
 /-!
 # Random forcing over the random algebra: the units (F4) and (F5)
 
-This file starts the proof of `erdos501_of_col_random` (`ColRandom.lean`) by formalizing the
-random-forcing facts of the paper *"Erdős Problem 501 after adding ω₂ random reals"* (rev10) in
+This file starts the proof that `𝔠⁺` random reals force `Erdos501_f` (`Main.lean`,
+`erdos501_of_random`) by formalizing the random-forcing facts of the paper *"Erdős Problem 501 after adding ω₂ random reals"* (rev10) in
 the form that matches the measure-algebra Boolean-valued model `V (randomAlgebra ι)` of Flypitch.
 The paper's formalization plan has the units
 
