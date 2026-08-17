@@ -13,7 +13,7 @@ Formalization of both questions of [Erdős problem #501](https://www.erdosproble
 (Newelski–Pawlikowski–Seredyński 1987; formalized here without any boundedness
 hypothesis).
 **First question — independent of ZFC**: `CH` gives a counterexample (Hechler
-1972), while adding `𝔠⁺` random reals gives a positive answer (E. Glazer, 2026;
+1972), while adding `𝔠⁺` random reals gives a positive answer (E. Glazer, Sol, 2026;
 see `docs/paper/`).  Both directions are formalized here, at Mathlib level
 (Hechler's counterexample from `ℵ₁ = 𝔠`) and in the language of Flypitch
 (first-order `ZFC`, Boolean-valued models): the `L_ZFC`-sentence `Erdos501_f`
@@ -104,7 +104,7 @@ in the repository depends on `sorryAx` (the only `sorry`s are the statements of
 * P. Erdős, A. Hajnal, *Some remarks on set theory VIII*, Michigan Math. J. 7 (1960), 187–191 (arbitrarily large finite independent sets).
 * S. H. Hechler, *Directed graphs over topological spaces: some set theoretical aspects*, Israel J. Math. 11 (1972), 231–248 (CH counterexample).
 * L. Newelski, J. Pawlikowski, W. Seredyński, *Infinite free set for small measure set mappings*, Proc. AMS 100 (1987), 335–339 (closed case).
-* E. Glazer, *Erdős Problem 501 after adding ω₂ random reals* (2026), `docs/paper/erdos501_random_profiles_rev10.pdf`.
+* E. Glazer, Sol, *Erdős Problem 501 after adding ω₂ random reals* (2026), `docs/paper/erdos501_random_profiles_rev10.pdf`.
 * J. M. Han, F. van Doorn, *A formal proof of the independence of the continuum hypothesis*, CPP 2020 (Flypitch).
 
 ## License
