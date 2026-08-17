@@ -9,6 +9,9 @@ sentence, and — by unit (F8), the internal isomorphism of every internal compl
 with `Rdot` and the transport of the Erdős property (§6, `InternalField.lean`, `InternalIso.lean`,
 `Transfer.lean`) — `erdos501_forced : 𝔠⁺ ≤ #ι → ⊤ ⊩[V (randomAlgebra ι)] Erdos501_f` and
 `neg_Erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' ∼Erdos501_f)` for the universal sentence — all fully proved.
+The **¬CH direction** `Erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' Erdos501_f)` and the marquee theorem
+`independence_of_Erdos501 : independent ZFC Erdos501_f` are proved in `OmegaClosed.lean`,
+`CheckReals.lean`, `Hechler.lean` (Hechler's `CH` counterexample in the collapse model; §8).
 The paper's two-step forcing `𝔹_col_random` (step S7) is not needed for the consistency result and
 is not pursued.  The faithfulness of the rendering is also a theorem: the bridge
 `stdStructure_realize_Erdos501_f_iff : stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind`
@@ -247,4 +250,45 @@ rather than inside `ZFC`-provability: it certifies that `Erdos501_f` says exactl
 * `Bridge.lean`: `stdStructure_realize_Erdos501_f_iff` from the three.
 
 Sizes: `StdSemantics.lean` 440 lines, `RealsInZFSet.lean` 545, `ZFSetCOF.lean` 620, `Bridge.lean` 50.
+No `sorry`; axioms `[propext, Classical.choice, Quot.sound]`.
+
+## 8. The ¬CH direction: `independence_of_Erdos501` (done)
+
+`Erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' Erdos501_f)` via `⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f`, where
+`𝔹_collapse = Col(ω₁, ℝ)` of `ForcingCH.lean` (`collapse_algebra.CH_true : ⊤ ≤ CH`).  Hechler's
+counterexample, run Boolean-valuedly for the check-name reals.
+
+* `OmegaClosed.lean`: **ω-closed refinement.**  For a dense ω-closed `D ⊆ 𝔹`
+  (`Flypitch.DenseOmegaClosed`, e.g. `Collapse.D_col` = the principal opens of the collapse poset),
+  `exists_forall_of_denseOmegaClosed` makes countably many choices simultaneously below any nonzero
+  `Γ` (recursion picking a `D`-element below the current piece at each step; `iInf ∈ D` by ω-closure
+  is nonzero).  Derived: `exists_decide_of_denseOmegaClosed` (decide a sequence of Boolean values),
+  `exists_witness_of_denseOmegaClosed`.  This is the only use of the collapse's `(ω,∞)`-distributivity.
+* `CheckReals.lean`: **the check reals.**  `codeP r` = the `PSet` of codes of rationals `< r`,
+  `rname r = check (codeP r)` (`rname_bv_eq_of_ne`, distinct reals name definitely-distinct sets),
+  `Rc = {rname r}`, `plusC`/`timesC` (triples), `ltC` (pairs), `zeroC`/`oneC`.  Evaluation lemmas
+  `app2_opC`/`lt_ltC` with intro/elim forms decide `+`, `·`, `<` from the reals; the nineteen
+  order-field axioms (`isOp2_opC`, `assoc_opC`, …, `mulPos_C`) hold for generic `𝔹`; Dedekind
+  completeness `complete_Rc` needs a dense ω-closed subset — on a nonzero piece the cut
+  `{q | ∃ s ∈ S, q < s}` is decided completely, so `sSup` of the decided reals is the least upper
+  bound.  `completeOrderedField_Rc` / `completeOrderedField_Rc_collapse`.
+* `Hechler.lean`: **the counterexample.**  The generic surjection `π_af : ℵ₁̌ ↠ 𝒫(ω)̌` of
+  `ForcingCH.lean` gives, for each real `r`, its generic preimages `{i | gen i r}`
+  (`gen i r = π_af i (codeIdx r)`; `gen_wide`, `gen_anti`).  `A_r = {s | |s| ≤ |r|+1 ∧ s ≺ r}` where
+  `s ≺ r` (`memAEv r s`) means some preimage of `s` lies strictly below every preimage of `r`.
+  `Aname` is a function `Rc → 𝒫(Rc)` (`isFun_Aname`); each `A_r` is bounded (`bounded_Aset`) and,
+  being countable, of outer measure `< 1` (`outerMeasureLtOne_Aset`: on the piece where the generic
+  maps `i₀ ↦ r`, `A_r` is enumerated along a ground enumeration of the `< i₀` predecessors, and the
+  intervals `(s - δₙ, s + δₙ)`, `δₙ = 1/2^{n+3}`, have partial sums `≤ 1/2`).  The combinatorial core
+  `no_descent`: there is no injective `w : ℕ → Ordinal` with `v : ℕ → ℝ≥0` such that
+  `w k < w l → v l + 1 < v k` (floor `⌊v⌋₊` + argmin recursion builds a strictly decreasing ordinal
+  chain, contradicting `not_strictAnti_of_wellFoundedLT`).  `no_infinite_independent`: if `X ⊆ Rc`
+  is infinite and independent, refine (ω-closed) to a nonzero piece deciding an injective sequence
+  `rₖ ∈ X` with *least* preimages `iₖ` (`leastEv`, `exists_least_of_gen`); for `toT iₙ < toT iₘ`,
+  `memAEv (rₘ)(rₙ)` holds, so independence gives `¬(|rₙ| ≤ |rₘ|+1)`, i.e. `|rₘ|+1 < |rₙ|` — the
+  `no_descent` hypothesis, contradiction.  Hence `erdosProperty_Rc_eq_bot`, `erdos501_eq_bot`,
+  `neg_erdos501_forced_collapse : ⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f`, `Erdos501_f_unprovable`, and
+  **`independence_of_Erdos501 : independent ZFC Erdos501_f`** (with `neg_Erdos501_f_unprovable`).
+
+Sizes: `OmegaClosed.lean` 155 lines, `CheckReals.lean` 715, `Hechler.lean` 913.
 No `sorry`; axioms `[propext, Classical.choice, Quot.sound]`.

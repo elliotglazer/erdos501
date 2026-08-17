@@ -20,6 +20,7 @@ import Flypitch4.Erdos501.Transfer
 import Flypitch4.Erdos501.StdSemantics
 import Flypitch4.Erdos501.RealsInZFSet
 import Flypitch4.Erdos501.ZFSetCOF
+import Flypitch4.Erdos501.Hechler
 import Flypitch4.PrintFormula
 
 /-!
@@ -376,6 +377,26 @@ example : Flypitch.Erdos501.StdSem.completeOrderedField Flypitch.Erdos501.RealsI
 example : 𝔹_col_random =
     Flypitch.RegularOpens (Topology.WithLowerSet
       ({b : collapse_algebra.𝔹_collapse // ⊥ < b} × {b : randomAlgebra RandomIndex // ⊥ < b})) := rfl
+
+-- THE ¬CH DIRECTION (Hechler): `Erdos501_f_unprovable`, `independence_of_Erdos501`, fully proved
+#print axioms Flypitch.Erdos501.Hechler.no_descent
+#print axioms Flypitch.Erdos501.CheckReals.completeOrderedField_Rc
+#print axioms Flypitch.Erdos501.CheckReals.completeOrderedField_Rc_collapse
+#print axioms Flypitch.Erdos501.exists_forall_of_denseOmegaClosed
+#print axioms Flypitch.Erdos501.Hechler.isFun_Aname
+#print axioms Flypitch.Erdos501.Hechler.bounded_Aset
+#print axioms Flypitch.Erdos501.Hechler.outerMeasureLtOne_Aset
+#print axioms Flypitch.Erdos501.Hechler.no_infinite_independent
+#print axioms Flypitch.Erdos501.Hechler.erdos501_eq_bot
+#print axioms Flypitch.Erdos501.Hechler.neg_erdos501_forced_collapse
+#print axioms Flypitch.Erdos501.Hechler.Erdos501_f_unprovable
+#print axioms Flypitch.Erdos501.Hechler.independence_of_Erdos501
+
+-- shape checks for the ¬CH direction
+example : (⊤ : collapse_algebra.𝔹_collapse) ⊩[V collapse_algebra.𝔹_collapse]
+    (bd_not Erdos501_f : sentence L_ZFC) := Flypitch.Erdos501.Hechler.neg_erdos501_forced_collapse
+example : ¬ Fol.SentTheory.sprovable ZFC Erdos501_f := Flypitch.Erdos501.Hechler.Erdos501_f_unprovable
+example : independent ZFC Erdos501_f := Flypitch.Erdos501.Hechler.independence_of_Erdos501
 
 -- the sentence is a concrete (computable) object: its printed form
 #eval IO.println s!"|Erdos501_f| = {(print_formula Erdos501_f).length} characters"

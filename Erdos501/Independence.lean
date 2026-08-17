@@ -9,20 +9,22 @@ Structure (mirrors `independence_of_CH` in `Flypitch4/Summary.lean`):
   neg_erdos501_f_unprovable  : ¬ (ZFC ⊢ₛ' ∼Erdos501_f)
       from  ⊤ ⊩[V 𝔹_random_succ_continuum] Erdos501_f   -- `𝔠⁺` random reals
                                                         -- (`Flypitch4/Erdos501/Main.lean`,
-                                                        -- `neg_Erdos501_f_unprovable`)  DONE
+                                                        -- `neg_Erdos501_f_unprovable`)
   erdos501_f_unprovable      : ¬ (ZFC ⊢ₛ' Erdos501_f)
-      from  ⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f              -- CH holds there (Flypitch,
-                                                        -- `V_𝔹_collapse_models_CH`);
-                                                        -- Hechler internalised.  OPEN (unit H3)
+      from  ⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f              -- Hechler's counterexample in the
+                                                        -- collapse model, where CH holds
+                                                        -- (`Flypitch4/Erdos501/Hechler.lean`,
+                                                        -- `Hechler.Erdos501_f_unprovable`)
   erdos501_independent       : independent ZFC Erdos501_f :=
       ⟨erdos501_f_unprovable, neg_erdos501_f_unprovable⟩
 
   erdos501_sentence_faithful : stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind
-      `Flypitch4/Erdos501/Bridge.lean`, `stdStructure_realize_Erdos501_f_iff`  DONE
+      `Flypitch4/Erdos501/Bridge.lean`, `stdStructure_realize_Erdos501_f_iff`
 
-See `docs/STATUS.md`.
+All four are proved; see `docs/STATUS.md`.
 -/
 import Flypitch4.Erdos501.Main
+import Flypitch4.Erdos501.Hechler
 import Flypitch4.Erdos501.Bridge
 import Flypitch4.Summary
 
@@ -37,14 +39,16 @@ theorem neg_erdos501_f_unprovable :
     ¬ (ZFC ⊢ₛ' (bd_not Flypitch.Erdos501.Erdos501_f : sentence L_ZFC)) :=
   Flypitch.Erdos501.neg_Erdos501_f_unprovable
 
-/-- OPEN (unit H3).  `¬ (ZFC ⊢ₛ' Erdos501_f)`, to be derived from
-`⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f` (Hechler's construction internalised in the
-collapse extension, where `CH` holds by `V_𝔹_collapse_models_CH`). -/
-theorem erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' Flypitch.Erdos501.Erdos501_f) := by
-  sorry
+/-- `¬ (ZFC ⊢ₛ' Erdos501_f)`: in the collapse model `V 𝔹_collapse` (where `CH`
+holds, `V_𝔹_collapse_models_CH`) Hechler's family of countable bounded sets has
+no infinite independent set, so `∼Erdos501_f` is forced
+(`Flypitch.Erdos501.Hechler.neg_erdos501_forced_collapse`) and `ZFC` does not
+derive `Erdos501_f`. -/
+theorem erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' Flypitch.Erdos501.Erdos501_f) :=
+  Flypitch.Erdos501.Hechler.Erdos501_f_unprovable
 
 /-- Independence of the first question of Erdős #501 from `ZFC` (Flypitch's
-`independent`): open exactly in its first component (`erdos501_f_unprovable`). -/
+`independent`). -/
 theorem erdos501_independent : independent ZFC Flypitch.Erdos501.Erdos501_f :=
   ⟨erdos501_f_unprovable, neg_erdos501_f_unprovable⟩
 

@@ -1,39 +1,38 @@
 # Status of the formalization
 
-Last updated: 2026‑08‑17 (forcing development integrated).  "Verified" means:
-builds without `sorry`, `#print axioms` = `[propext, Classical.choice, Quot.sound]`,
-at the unified pin of this repository,
+Last updated: 2026‑08‑17 — **complete**.  "Verified" means: builds without
+`sorry`, `#print axioms` = `[propext, Classical.choice, Quot.sound]`, at the
+unified pin of this repository,
 **Lean v4.34.0-rc1 / Mathlib `355bc1e0ed1d36e49525121e1a280ca13a058a92`**.
 
-## Comparator targets (`Challenge.lean`)
+## Comparator targets (`Challenge.lean`) — all verified
 
-| # | target | mathematics | proof status | in `config-proved.json` |
-|---|---|---|---|---|
-| 1 | `erdos501_closed_infinite` | NPS87: closed, measure < 1 ⇒ infinite independent set | **verified** (`Erdos501/Closed.lean`, `Erdos501.erdos501_pairwise`) | yes |
-| 2 | `erdos501_closed_size3` | second question as asked | **verified** (`Erdos501.erdos501_ncard_three`) | yes |
-| 3 | `erdos501_hechler_of_CH` | Hechler: CH ⇒ ¬P (ZFC theorem, Mathlib level) | **verified** (`Erdos501/Hechler.lean`) | yes |
-| 4 | `erdos501_not_refutable` | `¬ (ZFC ⊢ₛ' ∼Erdos501_f)`: P holds after adding `𝔠⁺` random reals | **verified** (`Flypitch4/Erdos501/Main.lean`, `Flypitch.Erdos501.neg_Erdos501_f_unprovable`, via `erdos501_of_random : ⊤ ⊩[V 𝔹_random_succ_continuum] Erdos501_f`) | yes |
-| 5 | `erdos501_not_provable` | `¬ (ZFC ⊢ₛ' Erdos501_f)`: ¬P holds in the collapse extension (CH + Hechler) | **open** — unit H3 below (`Erdos501/Independence.lean`, `erdos501_f_unprovable`, the only `sorry` on the route) | no |
-| 6 | `erdos501_independent` | `independent ZFC Erdos501_f` = 4 ∧ 5 | open exactly in component 5 | no |
-| 7 | `erdos501_sentence_faithful` | `stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` | **verified** (`Flypitch4/Erdos501/Bridge.lean`, `stdStructure_realize_Erdos501_f_iff`) | yes |
+| # | target | mathematics | proof |
+|---|---|---|---|
+| 1 | `erdos501_closed_infinite` | NPS87: closed, measure < 1 ⇒ infinite independent set | `Erdos501/Closed.lean`, `Erdos501.erdos501_pairwise` |
+| 2 | `erdos501_closed_size3` | second question as asked | `Erdos501.erdos501_ncard_three` |
+| 3 | `erdos501_hechler_of_CH` | Hechler: CH ⇒ ¬P (ZFC theorem, Mathlib level) | `Erdos501/Hechler.lean` |
+| 4 | `erdos501_not_refutable` | `¬ (ZFC ⊢ₛ' ∼Erdos501_f)`: P holds after adding `𝔠⁺` random reals | `Flypitch4/Erdos501/Main.lean`, `Flypitch.Erdos501.neg_Erdos501_f_unprovable`, via `erdos501_of_random : ⊤ ⊩[V 𝔹_random_succ_continuum] Erdos501_f` |
+| 5 | `erdos501_not_provable` | `¬ (ZFC ⊢ₛ' Erdos501_f)`: ¬P holds in the collapse extension (CH + Hechler) | `Flypitch4/Erdos501/Hechler.lean`, `Flypitch.Erdos501.Hechler.Erdos501_f_unprovable`, via `neg_erdos501_forced_collapse : ⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f` |
+| 6 | `erdos501_independent` | `independent ZFC Erdos501_f` = 4 ∧ 5 | `Erdos501/Independence.lean` (also `Flypitch.Erdos501.Hechler.independence_of_Erdos501`) |
+| 7 | `erdos501_sentence_faithful` | `stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` | `Flypitch4/Erdos501/Bridge.lean`, `stdStructure_realize_Erdos501_f_iff` |
 
-**`config-proved.json` (targets 1, 2, 3, 4, 7) passes the comparator**: HEAD
-`777e7f5`, lean4export at v4.34.0-rc1, non-sandboxed dry run, 2026‑08‑17 —
-"Lean default kernel accepts the solution / Your solution is okay!".
-`config.json` (all seven) cannot pass until unit H3 is closed.
+**`config.json` (all seven targets) passes the comparator**: HEAD `777e7f5`,
+lean4export at v4.34.0-rc1, non-sandboxed dry run, 2026‑08‑17 — "Lean default
+kernel accepts the solution / Your solution is okay!".
 
 Axiom audit of the targets: `docs/audits/2026-08-17-axiom-audit-targets-355bc1e.txt`
-(`validation/AxiomAudit.lean`).  Audit of the whole forcing tree (185
+(`validation/AxiomAudit.lean`).  Audit of the whole forcing tree (197
 declarations): `docs/audits/2026-08-17-erdos501-forcing-audit-355bc1e.txt`
 (`validation/Erdos501Audit.lean`) — identical, declaration by declaration, to
 the audit at the original pin 83a5988
 (`third_party/flypitch4/erdos501-audit-output-83a5988.txt`).  The only
-declarations depending on `sorryAx` in the whole repository are
+declarations in the whole repository depending on `sorryAx` are
 `Flypitch.Erdos501.erdos501_of_col_random` and its corollary
 `neg_Erdos501_f_unprovable_of_col_random` (the paper's literal two-step forcing
-Col × Random, off the formalized route — the route uses the pure random algebra
-with `𝔠⁺` coordinates, `RandomIndex`), and `Erdos501.erdos501_f_unprovable`
-(unit H3), with `erdos501_independent` / `erdos501_not_provable` inheriting it.
+Col × Random, stated in `Flypitch4/Erdos501/ColRandom.lean` and **not used**:
+the formalized route uses the pure random algebra with `𝔠⁺` coordinates,
+`RandomIndex`).  No target depends on them.
 
 ## Independence proof — unit map
 
@@ -45,19 +44,18 @@ field has the Erdős property", `Flypitch4/Erdos501/Sentence.lean`;
 `ι → (ℕ → Bool)`; `𝔹_random_succ_continuum = randomAlgebra RandomIndex` with
 `#RandomIndex = 𝔠⁺`.
 
-### Direction ¬(ZFC ⊢ Erdos501_f)  (needs a model of ¬P)
+### Direction ¬(ZFC ⊢ Erdos501_f)  (a model of ¬P) — **complete**
 
-| unit | content | status |
+| unit | content | where |
 |---|---|---|
-| H1 | Hechler at Mathlib level: `CH → ¬P` | verified (target 3) |
-| H2 | Flypitch: `⊤ ⊩[V 𝔹_collapse] CH_f` | verified (`V_𝔹_collapse_models_CH`, vendored port) |
-| H3 | Transfer: `⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f` | **open** — Hechler's construction internalised in the Boolean-valued universe (in progress in the forcing session; future patches go to `Flypitch4/Erdos501/`) |
-| H4 | `erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' Erdos501_f)` from H3 by Boolean soundness (`unprovable_of_model_neg` pattern of `Main.lean`) | routine once H3 exists |
+| H1 | Hechler at Mathlib level: `CH → ¬P` | `Erdos501/Hechler.lean` (target 3) |
+| H2 | Flypitch: `⊤ ⊩[V 𝔹_collapse] CH_f` | `Flypitch4/ForcingCH.lean` (`V_𝔹_collapse_models_CH`, vendored port); the collapse's ω-closedness (`check_functions_eq_functions`, `DenseOmegaClosed`) is what H3 uses |
+| H3 | `⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f` | `Flypitch4/Erdos501/OmegaClosed.lean` (external ω-closed refinement: on a nonzero piece an ω-sequence of decisions can be made), `CheckReals.lean` (the check-name reals `Rc` with `plusC, timesC, ltC, zeroC, oneC` form an internal complete ordered field of `V 𝔹` for any `𝔹` with a dense ω-closed subset: `completeOrderedField_Rc`), `Hechler.lean` (Hechler's family `Aname` from the generic collapse `π_af`; `isFun_Aname`, `bounded_Aset`, `outerMeasureLtOne_Aset`, `no_infinite_independent`, `erdosProperty_Rc_eq_bot`, `erdos501_eq_bot`, `neg_erdos501_forced_collapse`) |
+| H4 | `Erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' Erdos501_f)` by Boolean soundness | `Hechler.lean` (`unprovable_of_model_neg`, the pattern of `CH_f_unprovable`) |
 
-### Direction ¬(ZFC ⊢ ∼Erdos501_f)  (needs a model of P: 𝔠⁺ random reals) — **complete**
+### Direction ¬(ZFC ⊢ ∼Erdos501_f)  (a model of P: 𝔠⁺ random reals) — **complete**
 
-All in `Flypitch4/Erdos501/` (namespace `Flypitch.Erdos501`), all verified at
-the unified pin (see the forcing audit):
+All in `Flypitch4/Erdos501/` (namespace `Flypitch.Erdos501`):
 
 | unit | content | where |
 |---|---|---|
@@ -88,6 +86,6 @@ direction DeepMind ⇒ std).
 |---|---|
 | Flypitch4 port vendored (`ianklatzco/flypitch@ad649f8`, `flypitch4/`) | done and forward-ported to the unified pin; `independence_of_CH` and all endpoints use only the standard axioms (`third_party/flypitch4/validation/AxiomAudit.lean`); see `docs/PORTING-NOTES.md` |
 | Random/measure algebra additions (`Flypitch4/{MeasureAlgebra,RandomAlgebra,ForcingRandom,SummaryRandom}.lean`, `independence_of_CH_random`) | integrated and ported (2026‑08‑17) |
-| Forcing development `Flypitch4/Erdos501/*` (24 modules, ≈11.5k lines) | integrated from the 2026‑08‑17 forcing session (zip `erdos501leansources.zip`, at 83a5988) and forward-ported to the unified pin; audit identical to the original |
-| Comparator files (`Challenge.lean`, `Solution.lean`, `config.json`, `config-proved.json`) | `lake build` passes; comparator accepts `config-proved.json` (targets 1, 2, 3, 4, 7) |
-| CI (`.github/workflows/ci.yml`): build + axiom audit + comparator on `config-proved.json` | written, untested on GitHub |
+| Forcing development `Flypitch4/Erdos501/*` (27 modules, ≈13.3k lines) | integrated from the 2026‑08‑17 forcing session (zips `erdos501leansources*.zip`, at 83a5988) and forward-ported to the unified pin; audit identical to the original |
+| Comparator files (`Challenge.lean`, `Solution.lean`, `config.json`) | `lake build` passes; comparator accepts `config.json` (all seven targets) |
+| CI (`.github/workflows/ci.yml`): build + axiom audit + comparator on `config.json` | written, untested on GitHub |

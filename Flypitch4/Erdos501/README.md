@@ -1,7 +1,7 @@
 # Erdős problem #501 (first question) in the Flypitch framework
 
-This directory contains the formalization of the relative consistency of a positive answer to the
-first question of Erdős problem #501 — as formalized in DeepMind's `formal-conjectures`
+This directory contains the formalization of **the independence from `ZFC` of the first question of
+Erdős problem #501** — as formalized in DeepMind's `formal-conjectures`
 (`FormalConjectures/ErdosProblems/501.lean`, theorem `erdos_501`):
 
 > ```
@@ -11,7 +11,10 @@ first question of Erdős problem #501 — as formalized in DeepMind's `formal-co
 
 rendered as sentences of first-order set theory (`Sentence.lean`: `Erdos501_f`, "every complete
 ordered field has the Erdős property", and `Erdos501_ex_f`, "there is a complete ordered field with
-the Erdős property"; `ZFC` proves both equivalent to each other and to the statement about `ℝ`).
+the Erdős property"; `ZFC` proves both equivalent to each other and to the statement about `ℝ`).  The
+main result is **`independence_of_Erdos501 : independent ZFC Erdos501_f`**: neither `Erdos501_f` nor
+its negation is provable — a positive answer is forced by adding `𝔠⁺` random reals, and a negative
+answer (Hechler's `CH` counterexample) is forced by the collapse `Col(ω₁, ℝ)`.
 
 ## Main theorems (`Main.lean`)
 
@@ -29,6 +32,11 @@ the Erdős property"; `ZFC` proves both equivalent to each other and to the stat
 * `neg_Erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' ∼Erdos501_f)` and `neg_Erdos501_ex_f_unprovable` — **`ZFC`
   does not refute a positive answer to Erdős #501 (first question)**: the relative consistency of a
   positive answer, for both renderings of the sentence;
+* `Erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' Erdos501_f)` and **`independence_of_Erdos501 : independent ZFC
+  Erdos501_f`** (`Hechler.lean`) — **`ZFC` does not *prove* `Erdos501_f` either**, so the first
+  question is **independent of `ZFC`**.  In the collapse model `V 𝔹_collapse` (where `CH` holds,
+  `collapse_algebra.CH_true`) Hechler's family `⟨A_x⟩` of countable bounded sets of reals has no
+  infinite independent set, forcing `∼Erdos501_f` (`neg_erdos501_forced_collapse`);
 * **the bridge** `stdStructure_realize_Erdos501_f_iff : stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind`
   (`Bridge.lean`) — **the sentence `Erdos501_f` means exactly DeepMind's proposition**: in the
   standard model `ZFSet` of Lean/Mathlib, `Erdos501_f` holds iff `erdos501_deepmind` (the right-hand
@@ -61,6 +69,9 @@ consistency result.
 | `StdSemantics.lean` | Bridge, part 1: `erdos501_deepmind : Prop` (the DeepMind proposition verbatim), the standard structure `stdStructure` on Mathlib's `ZFSet` (`∅`, Kuratowski pairs, `ω`, `𝒫`, `⋃`, `∈`), the two-valued predicates `StdSem.*` on `ZFSet` mirroring the blocks of `Sentence.lean`, and the computation `realize_Erdos501_f_std : (stdStructure ⊨ₘ Erdos501_f) ↔ StdSem.erdos501` (the analogue of `Semantics.lean`); a `ZFSet` toolkit (the finite ordinals `natZ n`, `mem_omega_iff`, values `fval`/`opval` of internal functions/operations). **Proved.** |
 | `RealsInZFSet.lean` | Bridge, part 2 (`StdSem.erdos501 → erdos501_deepmind`): the coding `cutZ r` of a real by its rational cut (injective), the complete ordered field `(Rz, plusZ, timesZ, ltZ, zeroZ, oneZ)` inside `ZFSet` (`completeOrderedField_Rz`, all twenty axioms), the copies `setZ`, `famZ`, `seqZ` of sets, families and sequences of reals, the **covering lemma** `exists_cover_of_volume_lt_one` (a set of reals of Lebesgue outer measure `< 1` is covered by open intervals `(aₙ, bₙ)` with all partial sums of lengths `≤ r < 1`, extracted from the definition of the Lebesgue outer measure as `OuterMeasure.ofFunction`), the internal hypotheses for `famZ A` (`bounded_setZ`, `outerMeasureLtOne_setZ`), and the pull-back of an internal infinite independent set (`erdos501_deepmind_of_std`). **Proved.** |
 | `ZFSetCOF.lean` | Bridge, part 3 (`erdos501_deepmind → StdSem.erdos501`): for a complete ordered field `F` inside `ZFSet` (a bundle `COF`), the carrier `Carrier F = {x // x ∈ F.R}` with the operations read off from `plus`, `times`, `ltR`, and the instances `Field`, `LinearOrder`, `IsStrictOrderedRing`, `ConditionallyCompleteLinearOrder` verified from the internal axioms; the isomorphism `realIso : ℝ ≃+*o Carrier F` (Mathlib's `ConditionallyCompleteLinearOrderedField.inducedOrderRingIso`); the pull-back `pull A : ℝ → Set ℝ` of an internal family (`isBounded_pull`, `volume_pull_lt_one`), the push-forward `push X'` of an infinite independent set (`infinite_push`, `independent_push`), and `erdos501_std_of_deepmind`. **Proved.** |
+| `OmegaClosed.lean` | The ¬CH direction, part 1: **ω-closed refinement** for a dense ω-closed subset `D ⊆ 𝔹` (`Flypitch.DenseOmegaClosed`, e.g. the principal opens of the collapse poset): countably many choices/decisions can be made simultaneously below any nonzero `Γ` (`exists_forall_of_denseOmegaClosed`, `exists_decide_of_denseOmegaClosed`, `exists_witness_of_denseOmegaClosed`).  This is the external form of the `(ω,∞)`-distributivity of `𝔹_collapse` ("no new `ω`-sequences"), and it is the only property of the collapse algebra the argument uses. **Proved.** |
+| `CheckReals.lean` | The ¬CH direction, part 2: **the check-name reals** as an internal complete ordered field of `V 𝔹`.  `rname r = check (codeP r)` (`rname_bv_eq_of_ne : rname r =ᴮ rname s = ⊥` for `r ≠ s`), the names `Rc`, `plusC`, `timesC`, `ltC`, `zeroC`, `oneC`, evaluation lemmas, the nineteen first-order axioms (generic `𝔹`), and Dedekind completeness `complete_Rc` for `𝔹` with a dense ω-closed subset (the cut of an internal `S ⊆ Rc` is decided on a nonzero piece, so its supremum is a ground real), giving `completeOrderedField_Rc` / `completeOrderedField_Rc_collapse`. **Proved.** |
+| `Hechler.lean` | The ¬CH direction, part 3: **Hechler's counterexample in `V 𝔹_collapse`**.  The generic surjection `ℵ₁̌ ↠ 𝒫(ω)` (`ForcingCH.lean`'s `π_af`) well-orders the check reals; `A_r = {s : |s| ≤ |r|+1, s ≺ r}` where `s ≺ r` means the least generic preimage of `s` precedes that of `r` (`Aname`, `Aset`); `isFun_Aname`, `bounded_Aset`, `outerMeasureLtOne_Aset` (each `A_r` is countable, covered by intervals of total length `≤ 1/2` read from a ground enumeration of the predecessors); the combinatorial descent `no_descent` (no injective `ℕ → Ordinal` with `v : ℕ → ℝ≥0` where a larger ordinal forces `v` to drop by `>1`) and `no_infinite_independent` (via ω-closed refinement to a nonzero piece deciding an injective sequence in `X` with its least preimages, then independence + the descent); hence `erdos501_eq_bot`, `neg_erdos501_forced_collapse`, `Erdos501_f_unprovable`, **`independence_of_Erdos501`**. **Proved.** |
 | `RandomForcing.lean` | **The proof begins**: unit (F4), Theorems 4.1 (countable support / Borel reading of names for reals) and 4.2 (factorization), and unit (F5), Theorem 4.5 (the isolated fresh-coordinate forcing argument), proved for the random algebra `randomAlgebra ι` of an arbitrary index type; see below. |
 | `DeltaSystem.lean` | Unit (F3), Theorem 4.3: the Δ-system lemma for `𝔠⁺` countable sets, **proved** (Zorn + a closure chain of length `ω₁`), in the form consumed by Prop. 4.4. |
 | `HomogeneousReading.lean` | Unit (F4), Prop. 4.4: the homogeneous Borel reading of `𝔠⁺` names, proved from Theorems 4.1, 4.3 and the count "at most `𝔠` Borel functions `2^R × 2^ℕ → 2^ω`". |
@@ -402,8 +413,9 @@ we use `𝔠 < 𝔠⁺` (`𝔠^{ℵ₀} = 𝔠`, a theorem of `ZFC`).
   every internal complete ordered field, and `erdos501_forced` by `forced_Erdos501_f_iff`.
 
 **What remains** (see `PLAN.md`; steps S1–S6 and S8 = (F8) are done; both sentences are fully
-proved to be forced by `𝔠⁺` random reals, both relative-consistency theorems are `sorry`-free, and
-the bridge `stdStructure_realize_Erdos501_f_iff` is proved).  Only the paper's literal two-step
+proved to be forced by `𝔠⁺` random reals, both relative-consistency theorems are `sorry`-free, the
+bridge `stdStructure_realize_Erdos501_f_iff` is proved, and **the first question is proved
+independent of `ZFC`**, `independence_of_Erdos501`).  Only the paper's literal two-step
 forcing `𝔹_col_random` (`erdos501_of_col_random`) is left as `sorry`: it would need the theory of
 names in the product `Col × Random` (a σ-closed factor adds no reals, so the reals of the product
 extension are those of the random extension); it is not needed for the consistency result and is
@@ -418,8 +430,10 @@ not pursued.
 `ZFCCore.lean`, `DeltaSystem.lean`, `RandomForcing.lean`, `HomogeneousReading.lean`,
 `BorelNames.lean`, `BinaryExpansion.lean`, `Semantics.lean`, `InternalReals.lean`,
 `RealReading.lean`, `Envelopes.lean`, `Selection.lean`, `Recursion.lean`, `Assembly.lean`,
-`InternalField.lean`, `InternalIso.lean`, `Transfer.lean` (`validation/Erdos501Audit.lean`), and so
-is the bridge `stdStructure_realize_Erdos501_f_iff` with its files `StdSemantics.lean`,
-`RealsInZFSet.lean`, `ZFSetCOF.lean`, `Bridge.lean`.  The only `sorry` in the repository is the
+`InternalField.lean`, `InternalIso.lean`, `Transfer.lean` (`validation/Erdos501Audit.lean`); so is
+the bridge `stdStructure_realize_Erdos501_f_iff` (`StdSemantics.lean`, `RealsInZFSet.lean`,
+`ZFSetCOF.lean`, `Bridge.lean`); and so is the **independence theorem
+`independence_of_Erdos501 : independent ZFC Erdos501_f`** with its ¬CH direction
+(`OmegaClosed.lean`, `CheckReals.lean`, `Hechler.lean`).  The only `sorry` in the repository is the
 literal assertion `erdos501_of_col_random` about the paper's two-step forcing (off-route; its
 corollary is `neg_Erdos501_f_unprovable_of_col_random`).

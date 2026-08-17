@@ -174,7 +174,7 @@ which were already generic in `𝔹`).
 
 ---
 
-## Part III — Erdős problem #501: the assertion "`Col(ω₁, ℝ) ∗ (ω₂ random reals)` forces a positive answer" (statement only)
+## Part III — Erdős problem #501 (first question): independence from `ZFC`
 
 Added in `Flypitch4/Erdos501/` (see its `README.md`):
 
@@ -379,5 +379,21 @@ measure theory of `V (randomAlgebra ι)`, which is the next unit.  For an index 
   `stdStructure_realize_Erdos501_f_iff : stdStructure ⊨ₘ Erdos501_f ↔ erdos501_deepmind` — the sentence
   is a faithful rendering of DeepMind's proposition; axioms `[propext, Classical.choice, Quot.sound]`.
 
+* **The ¬CH direction** (`OmegaClosed.lean`, `CheckReals.lean`, `Hechler.lean`, proved):
+  `Erdos501_f_unprovable : ¬ (ZFC ⊢ₛ' Erdos501_f)` via `neg_erdos501_forced_collapse :
+  ⊤ ⊩[V 𝔹_collapse] ∼Erdos501_f`.  `CH` holds in the collapse model (`collapse_algebra.CH_true`), so
+  Hechler's family `A_r = {s : |s| ≤ |r|+1, s ≺ r}` — with `≺` the well-order induced by the generic
+  surjection `ℵ₁̌ ↠ 𝒫(ω)` of `ForcingCH.lean` — is a family of countable (hence outer-measure `< 1`)
+  bounded sets with no infinite independent set (`no_infinite_independent`, via the combinatorial
+  descent `no_descent` and ω-closed refinement, `exists_forall_of_denseOmegaClosed`).  Here the
+  check-name reals `Rc` are shown to be an internal complete ordered field of `V 𝔹_collapse`
+  (`completeOrderedField_Rc`, Dedekind completeness using the collapse's `(ω,∞)`-distributivity).
+  Axioms `[propext, Classical.choice, Quot.sound]`.
+
+* **The marquee theorem** (`Hechler.lean`, proved): **`independence_of_Erdos501 : independent ZFC
+  Erdos501_f`** — neither `Erdos501_f` nor `∼Erdos501_f` is a theorem of `ZFC`, so the first question
+  of Erdős #501 is independent of `ZFC`.  Axioms `[propext, Classical.choice, Quot.sound]`.
+
 Not yet done (off-route): the paper's literal two-step forcing `𝔹_col_random`
-(`erdos501_of_col_random`) — the only remaining `sorry` in the repository.
+(`erdos501_of_col_random`) — the only remaining `sorry` in the repository (it is *not* needed for the
+independence result, which is complete).

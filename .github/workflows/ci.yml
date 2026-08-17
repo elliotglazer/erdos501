@@ -25,12 +25,12 @@ jobs:
       - name: Axiom audit of the comparator targets
         run: lake env lean validation/AxiomAudit.lean | tee axioms.txt
 
-      - name: Fail if a target listed in config-proved.json still depends on sorryAx
+      - name: Fail if a target listed in config.json depends on sorryAx
         run: |
           python3 - <<'EOF'
           import json, re, sys
           txt = open("axioms.txt").read()
-          closed = json.load(open("config-proved.json"))["theorem_names"]
+          closed = json.load(open("config.json"))["theorem_names"]
           bad = []
           for name in closed:
               m = re.search(r"'%s' depends on axioms: \[([^\]]*)\]" % re.escape(name), txt)
@@ -49,7 +49,7 @@ jobs:
           path: axioms.txt
 
   comparator:
-    name: comparator (config-proved.json)
+    name: comparator (config.json)
     runs-on: ubuntu-latest
     needs: build
     # The comparator needs landrun (Landlock) — fine on GitHub's Ubuntu runners.
@@ -74,9 +74,5 @@ jobs:
           scripts/install-comparator-tools.sh "$GITHUB_WORKSPACE/.tools"
           echo "$GITHUB_WORKSPACE/.tools/bin" >> "$GITHUB_PATH"
 
-      - name: Judge the targets that are provable today
-        run: NO_SYSTEMD=1 scripts/run-comparator.sh config-proved.json
-
-      - name: Judge the full challenge (allowed to fail until the independence proof is closed)
-        continue-on-error: true
+      - name: Judge the challenge (all seven targets)
         run: NO_SYSTEMD=1 scripts/run-comparator.sh config.json

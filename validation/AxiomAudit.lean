@@ -21,6 +21,9 @@ of `sorryAx` marks a target that is not yet closed.
 #print axioms Flypitch.Erdos501.Erdos501_f
 #print axioms Flypitch.Erdos501.erdos501_of_random
 #print axioms Flypitch.Erdos501.neg_Erdos501_f_unprovable
+#print axioms Flypitch.Erdos501.Hechler.neg_erdos501_forced_collapse
+#print axioms Flypitch.Erdos501.Hechler.Erdos501_f_unprovable
+#print axioms Flypitch.Erdos501.Hechler.independence_of_Erdos501
 #print axioms Flypitch.Erdos501.stdStructure_realize_Erdos501_f_iff
 
 -- Flypitch endpoints the independence statement is modelled on

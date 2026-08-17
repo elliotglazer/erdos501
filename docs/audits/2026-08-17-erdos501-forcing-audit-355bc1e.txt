@@ -234,9 +234,23 @@
 'Flypitch.Erdos501.RandomForcing.rd_one' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.RandomForcing.psi_surj' depends on axioms: [propext, Classical.choice, Quot.sound]
 'Flypitch.Erdos501.RandomForcing.psi_surj_app' depends on axioms: [propext, Classical.choice, Quot.sound]
-validation/Erdos501Audit.lean:322:46: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
-validation/Erdos501Audit.lean:326:16: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
-validation/Erdos501Audit.lean:326:54: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
-validation/Erdos501Audit.lean:344:40: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
-validation/Erdos501Audit.lean:344:60: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:323:46: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:327:16: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:327:54: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:345:40: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+validation/Erdos501Audit.lean:345:60: warning: `Set.restrict` has been deprecated: Use `Set.domRestrict` instead
+'Flypitch.Erdos501.Hechler.no_descent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.CheckReals.completeOrderedField_Rc' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.CheckReals.completeOrderedField_Rc_collapse' depends on axioms: [propext,
+ Classical.choice,
+ Quot.sound]
+'Flypitch.Erdos501.exists_forall_of_denseOmegaClosed' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Hechler.isFun_Aname' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Hechler.bounded_Aset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Hechler.outerMeasureLtOne_Aset' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Hechler.no_infinite_independent' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Hechler.erdos501_eq_bot' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Hechler.neg_erdos501_forced_collapse' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Hechler.Erdos501_f_unprovable' depends on axioms: [propext, Classical.choice, Quot.sound]
+'Flypitch.Erdos501.Hechler.independence_of_Erdos501' depends on axioms: [propext, Classical.choice, Quot.sound]
 |Erdos501_f| = 4223 characters

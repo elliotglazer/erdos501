@@ -9,10 +9,7 @@ The untrusted half of the comparator challenge: the statements of
 `Erdos501` development.  Only the statements are compared by the comparator;
 this file may import anything.
 
-Targets whose proofs are not yet complete in the development are still
-present, so that `lake build Solution` succeeds; the comparator is run with a
-`config` that lists only the targets whose proofs are closed
-(see `config-proved.json`) until the full `config.json` can be met.
+All seven targets are proved; `config.json` lists them all.
 -/
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.SetTheory.Cardinal.Continuum

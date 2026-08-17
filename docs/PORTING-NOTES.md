@@ -62,7 +62,8 @@ Remedies used, in order of preference:
      give it explicitly (`mkReal_definite (measurable_code.comp hf)`).
 7. Binder restatement (item 2) for every name `⟨T, func, bval⟩`:
    `borelName_func/bval`, `profilesName_*`, `Rdot_*`, `ltDot_*`, `opDot_*`,
-   `openName_*`, `valSet_*`, `Xname_*`, `fname_*`, `imgSet_*` now take
+   `openName_*`, `valSet_*`, `Xname_*`, `fname_*`, `imgSet_*`, `Rc_*`, `opC_*`,
+   `ltC_*`, `Aname_*`, `seqName_*` now take
    `(i : (name …).type)`; a coercion `π a` for `a : J` then has to be written
    `π a.1`.  Where a `simp only [name_bval, …]` still cannot fire because the
    *goal's* index has the "wrong" type (`a : J` introduced before
@@ -92,7 +93,7 @@ Remedies used, in order of preference:
 | `Mathlib.SetTheory.Cardinal.Cofinality` import | deprecated import name (warning only) |
 | `if_true/if_false`, `dif_pos/dif_neg`, `push_neg`, `Set.mem_setOf_eq` | deprecated (warnings): `ite_true/ite_false`, `dite_eq_left/right`, `push Not`, `Set.mem_ofPred_eq` |
 | `Set.restrict` (`T.restrict x`, `T : Set ι`) | `Set.domRestrict` (92 occurrences in `Flypitch4/Erdos501/*`; `Measure.restrict` unchanged) |
-| `le_bihimp_iff : a ≤ b ⇔ c ↔ a ⊓ b ≤ c ∧ a ⊓ c ≤ b`, `le_bihimp` | now `to_dual`-generated with the other orientation; old shape re-stated as private lemmas in `Transfer.lean` |
+| `le_bihimp_iff : a ≤ b ⇔ c ↔ a ⊓ b ≤ c ∧ a ⊓ c ≤ b`, `le_bihimp` | now `to_dual`-generated with the other orientation; old shape re-stated as private lemmas in `Transfer.lean` and `Hechler.lean` |
 | `mul_le_mul_right'` | `mul_le_mul_left` (ZFC core) |
 | `Cardinal.countable_iff_lt_aleph_one` | deprecated; `le_aleph0_iff_set_countable` + `lt_aleph_one_iff` |
 | `Set.Infinite.diff` | `Set.Infinite.sdiff` |

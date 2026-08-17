@@ -73,3 +73,9 @@ import Flypitch4.Erdos501.StdSemantics
 import Flypitch4.Erdos501.RealsInZFSet
 -- the bridge, part 3: internal complete ordered fields ≅ `ℝ`; DeepMind ⇒ standard model
 import Flypitch4.Erdos501.ZFSetCOF
+-- ¬CH direction of Erdős #501: ω-closed refinement for `𝔹_collapse`
+import Flypitch4.Erdos501.OmegaClosed
+-- the check-name reals as an internal complete ordered field of `V 𝔹` (needs ω-closed refinement)
+import Flypitch4.Erdos501.CheckReals
+-- Hechler's CH counterexample in `V 𝔹_collapse`: `Erdos501_f_unprovable`, `independence_of_Erdos501`
+import Flypitch4.Erdos501.Hechler

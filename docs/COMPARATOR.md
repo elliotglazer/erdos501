@@ -17,8 +17,7 @@ in its own process.
 |---|---|
 | `Challenge.lean` | trusted statements (`sorry`) — seven targets |
 | `Solution.lean` | the same statements proved by delegation to `Erdos501` / `Flypitch4.Erdos501` |
-| `config.json` | full challenge (all seven targets) |
-| `config-proved.json` | the targets provable today: closed case ×2, Hechler, `erdos501_not_refutable`, `erdos501_sentence_faithful` — **passes** (2026‑08‑17) |
+| `config.json` | the challenge (all seven targets) — **passes** (2026‑08‑17) |
 | `lakefile.toml`, `lean-toolchain`, `lake-manifest.json` | the trusted build description (Mathlib pin) |
 | `scripts/install-comparator-tools.sh` | installs `landrun`, `lean4export` (at our toolchain tag), `comparator`, optionally `nanoda` |
 | `scripts/run-comparator.sh [config]` | `lake env comparator <config>` behind the recommended `systemd-run` wrapper |
@@ -71,8 +70,7 @@ scripts/install-comparator-tools.sh   # needs go, and cargo for nanoda (optional
 export PATH="$PWD/.tools/bin:$PATH"
 
 # judge
-scripts/run-comparator.sh config-proved.json   # prints "Your solution is okay!"
-scripts/run-comparator.sh config.json          # fails until `erdos501_not_provable` is closed
+scripts/run-comparator.sh config.json          # prints "Your solution is okay!"
 ```
 
 Without `landrun` (e.g. macOS) a *non-sandboxed* dry run is possible with
