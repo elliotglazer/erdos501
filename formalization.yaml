@@ -160,8 +160,8 @@ related_formalizations:
       measure theory, ZFSet and cardinals supply the rest of the trusted statements
 
 classification:
-  arxiv: [math.LO, math.CO]
-  msc2020: [03E35, 03E75, 03E40, 03E50, 05D10, 28A05]
+  arxiv: ["math.LO", "math.CO"]
+  msc2020: ["03E35", "03E75", "03E40", "03E50", "05D10", "28A05"]
 
 status:
   scope: >-
