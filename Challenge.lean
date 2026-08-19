@@ -574,9 +574,11 @@ theorem erdos501_closed_size3 :
 /-! ### First question: Hechler's counterexample under `CH` -/
 
 /-- Hechler (Israel J. Math. 11 (1972) 231–248): if `ℵ₁ = 𝔠` then there is a
-family of bounded sets of outer measure `< 1` (indeed countable, null sets)
-with no infinite independent set.  This is a theorem of ZFC, so it holds in
-Lean outright; the hypothesis `CH` is a genuine hypothesis of the theorem. -/
+family of bounded sets of outer measure `< 1` with no infinite independent set.
+This is a theorem of ZFC, so it holds in Lean outright; the hypothesis `CH` is a
+genuine hypothesis of the theorem.  (Hechler's construction in fact yields
+countable, null sets — a stronger property this compared statement does not
+assert; it is available in `Erdos501/Hechler.lean`.) -/
 theorem erdos501_hechler_of_CH :
     ((ℵ₁ : Cardinal.{u}) = 𝔠) →
     ∃ (A : ℝ → Set ℝ),

@@ -126,7 +126,8 @@ the limitations.
 
 * **Closed case** (`Erdos501/Closed.lean`): NPS87's argument at Mathlib level.
 * **Hechler under CH** (`Erdos501/Hechler.lean`): from `ℵ₁ = 𝔠`, a family of
-  countable null sets with no infinite independent set — a theorem of ZFC.
+  bounded sets of outer measure `< 1` (in fact countable and null) with no
+  infinite independent set — a theorem of ZFC.
 * **Forcing** (`Flypitch4/Erdos501/`, namespace `Flypitch.Erdos501`), in the
   Boolean-valued universe `V 𝔹` of the vendored Lean 4 port of Flypitch
   (Han–van Doorn's framework for the independence of CH):

@@ -21,7 +21,8 @@ project:
     answers.  Second question: yes — closed sets of measure < 1 admit an infinite independent set
     (Newelski–Pawlikowski–Seredyński 1987; no boundedness is needed), hence one of size 3.  First
     question: independent of ZFC.  Under CH (as ℵ₁ = 𝔠) Hechler's 1972 construction gives a
-    family of bounded null sets with no infinite independent set — a Mathlib-level theorem — and
+    family of bounded sets of outer measure < 1 (in fact countable and null) with no infinite
+    independent set — a Mathlib-level theorem — and
     the negation of the first question holds in the Boolean-valued model of the collapse algebra
     Col(ω₁, 𝒫(ω)); after adding 𝔠⁺ random reals (Glazer and Sol 2026, adapting the paper's ω₂ random reals
     over a CH ground) the first question has a positive answer, so it holds in the Boolean-valued
@@ -102,8 +103,9 @@ sources:
     relationship: formalizes
     author_endorsement: "n/a"
     note: >-
-      the CH counterexample: under CH a family of bounded (countable, null) sets with no infinite
-      independent set — target erdos501_hechler_of_CH (Erdos501/Hechler.lean, from ℵ₁ = 𝔠) and,
+      the CH counterexample: under CH a family of bounded sets of outer measure < 1 (in fact
+      countable and null) with no infinite independent set — target erdos501_hechler_of_CH
+      (Erdos501/Hechler.lean, from ℵ₁ = 𝔠) and,
       inside the collapse extension where CH holds, the direction ¬ (ZFC ⊨ᵇ Erdos501)
       (Flypitch4/Erdos501/Hechler.lean)
   - title: "Erdős Problem 501 after adding ω₂ random reals (draft, revision 10)"
