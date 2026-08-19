@@ -8,6 +8,18 @@ into this repository.  Nothing here should be taken on faith: the axiom audit
 (`scripts/check-axioms.sh`) and the comparator (`scripts/run-comparator.sh`) are
 the ground truth.
 
+## Discussion and claim
+
+The first question's resolution came out of the [erdosproblems.com forum thread
+for #501](https://www.erdosproblems.com/forum/thread/501): Newelski–Pawlikowski–
+Seredyński's positive resolution of the second question, Hechler's consistency of
+a negative answer to the first, Sungchul Lee's positive answer from a real‑valued
+measurable cardinal, and Elliot Glazer's transfer — carried out with Sol
+(GPT‑5.6) — of that consequence to the `ω₂`‑random‑reals extension of a model of
+`CH`, the argument formalized here (E. Glazer and Sol, 2026, `docs/paper/`).  The
+full claim is recorded on Elliot Glazer's [proof‑claims
+page](https://www.erdosproblems.com/forum/user/ElliotGlazer/proof-claims).
+
 ## Unified pin
 
 * Lean `leanprover/lean4:v4.34.0-rc1`

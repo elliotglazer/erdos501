@@ -53,6 +53,31 @@ the exact shape of Flypitch's `independence_of_CH`).  Both pass the comparator
 (`docs/COMPARATOR.md`).  See [`docs/STATUS.md`](docs/STATUS.md) for the map of
 the proof.
 
+## Background and discussion
+
+**Result** (E. Glazer and Sol, 2026): the first question is *independent of ZFC*
+— both answers are relatively consistent with ZFC — and the second question has
+a positive resolution; all of it is formalized in Lean and checked by the
+comparator (the seven targets below).
+
+The problem was already mostly resolved: Newelski–Pawlikowski–Seredyński had
+positively resolved the second question, Hechler had shown the consistency of a
+negative answer to the first, and Sungchul Lee had shown that a positive answer
+to the first follows from a real‑valued measurable (RVM) cardinal (equiconsistent
+with a measurable cardinal).  It remained to drop the large‑cardinal hypothesis:
+it is routine to transfer reasonably combinatorial `Π²₁` consequences of an RVM
+to the extension of an arbitrary model of `CH` by `ω₂` random reals, and applying
+that standard technology gives the positive answer with no large cardinals — so
+neither truth value adds consistency strength.  That transfer is the argument in
+[`docs/paper/`](docs/paper/), and it is what this repository formalizes, together
+with Hechler's counterexample and the Newelski–Pawlikowski–Seredyński closed case.
+
+The discussion is on the [erdosproblems.com forum thread for
+#501](https://www.erdosproblems.com/forum/thread/501) (Sungchul Lee's relative
+result, assisted by GPT‑5.5 Pro; Nat Sothanaphan's independence observation; and
+the transfer to random reals), and the full claim is recorded on Elliot Glazer's
+[proof‑claims page](https://www.erdosproblems.com/forum/user/ElliotGlazer/proof-claims).
+
 ## The seven targets (`Challenge.lean`, `comparator.json`)
 
 | target | statement | proof |
@@ -187,14 +212,16 @@ scripts/run-comparator.sh comparator-flypitch.json
 
 ## Provenance and process
 
-Every line of Lean in this repository was written by AI agents (Claude,
-Anthropic) in the claude.ai project "Formalizing Erdős 501", under the direction
-of the author, who supplied the mathematics (the paper in `docs/paper/`), chose
-the route (Flypitch's Boolean-valued models; the Mathlib `ModelTheory` statement)
-and reviewed the statements; see `formalization.yaml` (`automation`, `review`) and
-`docs/PROVENANCE.md` for the origin of each component and the pins it was verified
-at.  Mechanical checks (build, axiom audits, comparator on both configurations)
-run in CI.
+This work was directed by Elliot Glazer.  The mathematical argument of the
+positive direction — transferring the real‑valued‑measurable consequence to the
+`ω₂`‑random‑reals extension of a model of `CH` (`docs/paper/`) — was produced with
+GPT‑5.6 ("Sol"); every line of Lean in this repository was written by Claude
+(Anthropic) — Fable 5 and Opus 4.8 — in the claude.ai project "Formalizing Erdős
+501", following the route (Flypitch's Boolean‑valued models; the Mathlib
+`ModelTheory` statement) chosen with the author, who reviewed the statements.  See
+`formalization.yaml` (`automation`, `review`) and `docs/PROVENANCE.md` for the
+origin of each component and the pins it was verified at.  Mechanical checks
+(build, axiom audits, comparator on both configurations) run in CI.
 
 ## Mathematical sources
 

@@ -9,6 +9,7 @@ project:
   name: "Erdős Problem #501 in Lean 4: the closed case and the independence of the first question"
   authors:
     - "Elliot Glazer"
+    - "Sol"
   responsible_maintainers:
     - "Elliot Glazer"
   license: "Apache-2.0"
@@ -22,7 +23,7 @@ project:
     question: independent of ZFC.  Under CH (as ℵ₁ = 𝔠) Hechler's 1972 construction gives a
     family of bounded null sets with no infinite independent set — a Mathlib-level theorem — and
     the negation of the first question holds in the Boolean-valued model of the collapse algebra
-    Col(ω₁, 𝒫(ω)); after adding 𝔠⁺ random reals (Glazer 2026, adapting the paper's ω₂ random reals
+    Col(ω₁, 𝒫(ω)); after adding 𝔠⁺ random reals (Glazer and Sol 2026, adapting the paper's ω₂ random reals
     over a CH ground) the first question has a positive answer, so it holds in the Boolean-valued
     model of the random algebra with 𝔠⁺ coordinates.  Both Boolean-valued models are built in a
     Lean 4 port of Han–van Doorn's Flypitch (the framework of their independence-of-CH proof), and
@@ -64,6 +65,27 @@ sources:
       the canonical modern statement of the problem, listed there as open; the formalization's
       hypotheses follow this statement (per-set boundedness, outer measure < 1) and the
       formal-conjectures rendering of it
+  - title: "Erdős problem #501 — forum discussion (erdosproblems.com)"
+    authors: ["Sungchul Lee", "Nat Sothanaphan", "Elliot Glazer", "Sol"]
+    id: "https://www.erdosproblems.com/forum/thread/501"
+    type: "web discussion"
+    relationship: background
+    author_endorsement: participated
+    note: >-
+      the discussion thread for #501: Sungchul Lee's relative result (positive answer from a
+      real-valued measurable cardinal, assisted by GPT-5.5 Pro), Nat Sothanaphan's observation that
+      this gives independence, and Elliot Glazer's transfer of that consequence to the
+      ω₂-random-reals extension of a CH model — the argument formalized here
+  - title: "Elliot Glazer — proof claims for #501 (erdosproblems.com)"
+    authors: ["Elliot Glazer"]
+    id: "https://www.erdosproblems.com/forum/user/ElliotGlazer/proof-claims"
+    type: "web discussion"
+    relationship: background
+    author_endorsement: participated
+    note: >-
+      Elliot Glazer's recorded full-proof claim for #501 (independence of the first question,
+      positive resolution of the second), produced with GPT-5.6 (Sol), Claude Fable 5 and Claude
+      Opus 4.8
   - title: "Infinite free set for small measure set mappings"
     authors: ["Ludomir Newelski", "Janusz Pawlikowski", "Wiesław Seredyński"]
     id: "Proc. Amer. Math. Soc. 100 (1987), 335–339"
@@ -197,7 +219,7 @@ automation:
   methods:
     - method: agent
       models:
-        - "Claude (Anthropic); the final integration and the Mathlib ModelTheory bridge (Erdos501/FOL/, Challenge.lean, Solution.lean) were produced by claude-fable-5"
+        - "Claude (Anthropic) — Fable 5 (claude-fable-5) and Opus 4.8 (claude-opus-4-8); the final integration and the Mathlib ModelTheory bridge (Erdos501/FOL/, Challenge.lean, Solution.lean) were produced by Fable 5"
       framework: "Claude (Anthropic) agent sessions — Claude Cowork / Claude Code"
       tool_setup: >-
         Agent sessions in a claude.ai project ("Formalizing Erdős 501"), each with a Lean 4 toolchain
@@ -215,17 +237,25 @@ automation:
         Task-level natural-language instructions (formalize unit F3, port the library, make the
         Challenge Mathlib-only, …); the plans and audit notes are kept as project documents and, in
         part, under docs/ (docs/PORTING-NOTES.md, docs/audits/, docs/PROVENANCE.md).
+    - method: agent
+      models:
+        - "GPT-5.6 (\"Sol\")"
+      tool_setup: >-
+        The mathematical argument of the positive direction — transferring the combinatorial
+        consequence of a real-valued measurable cardinal to the ω₂-random-reals extension of a model
+        of CH — was produced with GPT-5.6 ("Sol"), tasked by Elliot Glazer, and written up as the
+        draft docs/paper/erdos501_random_profiles_rev10.pdf that this repository formalizes.
     - method: manual
       tool_setup: >-
-        Elliot Glazer: the mathematics (the paper docs/paper/erdos501_random_profiles_rev10.pdf,
-        the choice of route through Flypitch's Boolean-valued models, the axiomatization), review of
-        the trusted statements, repository administration.
+        Elliot Glazer: mathematical direction (the choice of route through Flypitch's Boolean-valued
+        models and the axiomatization, and tasking GPT-5.6 "Sol" with the transfer argument), review
+        of the trusted statements, and repository administration.
   spend_usd: "subscription-based usage"
   notes: >-
-    Full disclosure: every line of Lean in this repository was written by AI agents (Claude) under
-    the direction of the human author; no line was written by hand.  Exact model identifiers for
-    the earlier sessions were not recorded in the repository.  The Lean 4 port of Flypitch that is
-    vendored (Flypitch4/) was itself produced with Claude by Ian Klatzco.  All proofs are checked
+    Full disclosure: the mathematical argument of the positive direction (docs/paper/) was produced
+    with GPT-5.6 ("Sol"), tasked by the author; every line of Lean in this repository was written by
+    Claude (Fable 5 and Opus 4.8) under the author's direction, no line by hand.  The Lean 4 port of
+    Flypitch that is vendored (Flypitch4/) was itself produced with Claude by Ian Klatzco.  All proofs are checked
     by Lean's kernel; the comparator (leanprover/comparator) accepts both challenge configurations
     with the standard axioms only, and no declaration in the repository depends on sorryAx
     (docs/audits/, docs/STATUS.md).
