@@ -2,7 +2,7 @@
 Copyright (c) 2026 Elliot Glazer. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 
-Root module of the `Erdos501` development.  `Solution.lean` imports this.
+Root module of the `Erdos501` development.  `Solution.lean` and `SolutionFlypitch.lean` import this.
 See `docs/STATUS.md` for what each module proves and its state.
 
 The forcing side of the independence proof (the first-order sentence
@@ -19,3 +19,13 @@ import Erdos501.Hechler
 import Erdos501.ZFCCore
 -- Assembly: `independent ZFC Erdos501_f` and the faithfulness bridge.
 import Erdos501.Independence
+-- Bridge to Mathlib's first-order logic (the Palomar-conformant `Challenge.lean`):
+-- the shared statement, the translation to Flypitch, and the semantic independence
+-- `¬ (ZFC ⊨ᵇ Erdos501)`, `¬ (ZFC ⊨ᵇ ∼Erdos501)`.
+import Erdos501.FOL.Statement
+import Erdos501.FOL.Translate
+import Erdos501.FOL.FolLemmas
+import Erdos501.FOL.Collection
+import Erdos501.FOL.Axioms
+import Erdos501.FOL.Sentence
+import Erdos501.FOL.Independence

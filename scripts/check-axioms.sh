@@ -5,5 +5,5 @@
 # (in particular `sorryAx`) means the corresponding target is not closed.
 set -euo pipefail
 cd "$(dirname "$0")/.."
-lake build Solution
+lake build Solution SolutionFlypitch
 lake env lean validation/AxiomAudit.lean

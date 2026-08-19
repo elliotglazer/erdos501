@@ -401,4 +401,5 @@ independence result, which is complete).
 *Update (erdos501 repository, 2026‑08‑17):* the `sorry`-stated assertion `erdos501_of_col_random`
 and its corollary `neg_Erdos501_f_unprovable_of_col_random` (and the trivial
 `V_col_random_models_ZFC`) were removed from `ColRandom.lean`; the algebra `𝔹_col_random` is kept
-as a definition for reference.  The repository contains no `sorry` outside `Challenge.lean`.
+as a definition for reference.  The repository contains no `sorry` outside the two comparator
+Challenge files (`Challenge.lean`, `ChallengeFlypitch.lean`).

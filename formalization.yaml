@@ -1,0 +1,302 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+# formalization.yaml (v0.4) — metadata for the Lean 4 formalization of Erdős Problem #501.
+# Palomar registry conventions (https://palomar-registry.org/how-to-submit) are followed:
+# provenance is carried by project.responsible_maintainers and sources.
+
+version: "v0.4"
+
+project:
+  name: "Erdős Problem #501 in Lean 4: the closed case and the independence of the first question"
+  authors:
+    - "Elliot Glazer"
+  responsible_maintainers:
+    - "Elliot Glazer"
+  license: "Apache-2.0"
+  description: >-
+    Erdős problem #501 (Erdős 1961; Erdős–Hajnal 1971, Problem 38): for every real x let A_x be a
+    bounded set of reals of Lebesgue outer measure < 1; must there be an infinite independent set,
+    i.e. an infinite X ⊆ ℝ with x ∉ A_y for all distinct x, y ∈ X?  And if the sets A_x are closed
+    of measure < 1, must there be an independent set of size 3?  This repository formalizes both
+    answers.  Second question: yes — closed sets of measure < 1 admit an infinite independent set
+    (Newelski–Pawlikowski–Seredyński 1987; no boundedness is needed), hence one of size 3.  First
+    question: independent of ZFC.  Under CH (as ℵ₁ = 𝔠) Hechler's 1972 construction gives a
+    family of bounded null sets with no infinite independent set — a Mathlib-level theorem — and
+    the negation of the first question holds in the Boolean-valued model of the collapse algebra
+    Col(ω₁, 𝒫(ω)); after adding 𝔠⁺ random reals (Glazer 2026, adapting the paper's ω₂ random reals
+    over a CH ground) the first question has a positive answer, so it holds in the Boolean-valued
+    model of the random algebra with 𝔠⁺ coordinates.  Both Boolean-valued models are built in a
+    Lean 4 port of Han–van Doorn's Flypitch (the framework of their independence-of-CH proof), and
+    Flypitch's completeness theorem turns them into two-valued models.  The comparator challenge
+    states the results in Mathlib alone: the language of set theory, the theory ZFC (Flypitch's
+    axiomatization: extensionality, empty set, ordered pairs, union, power set, infinity,
+    regularity, Zorn's lemma, strong collection) and the sentence Erdos501 ("every complete
+    ordered field has the Erdős property") are defined in Mathlib's ModelTheory, and independence
+    is stated semantically as ¬ (ZFC ⊨ᵇ Erdos501) ∧ ¬ (ZFC ⊨ᵇ ∼Erdos501); a faithfulness theorem
+    shows that in Mathlib's ZFSet the sentence is equivalent to the Mathlib statement of the first
+    question, verbatim the proposition of google-deepmind/formal-conjectures.  All targets are
+    proved from propext, Classical.choice and Quot.sound only.  As far as we know this is the first
+    Erdős problem whose resolution is a formally verified independence result.
+
+sources:
+  - title: "Some unsolved problems (Problem II.9)"
+    authors: ["Paul Erdős"]
+    id: "Magyar Tud. Akad. Mat. Kutató Int. Közl. 6 (1961), 221–254"
+    type: paper
+    location: "Problem II.9"
+    relationship: background
+    author_endorsement: "n/a"
+    note: "poses the problem; no result of this source is formalized"
+  - title: "Unsolved problems in set theory (Problem 38)"
+    authors: ["Paul Erdős", "András Hajnal"]
+    id: "Proc. Sympos. Pure Math. XIII, Part I (Axiomatic Set Theory), AMS 1971, 17–48"
+    type: paper
+    location: "Problem 38 (B)/(C)"
+    relationship: background
+    author_endorsement: "n/a"
+    note: "restates the problem (both questions); no result of this source is formalized"
+  - title: "Erdős problem #501 (erdosproblems.com)"
+    authors: ["Thomas F. Bloom (ed.)"]
+    id: "https://www.erdosproblems.com/501"
+    type: "web discussion"
+    relationship: background
+    author_endorsement: "not-contacted"
+    note: >-
+      the canonical modern statement of the problem, listed there as open; the formalization's
+      hypotheses follow this statement (per-set boundedness, outer measure < 1) and the
+      formal-conjectures rendering of it
+  - title: "Infinite free set for small measure set mappings"
+    authors: ["Ludomir Newelski", "Janusz Pawlikowski", "Wiesław Seredyński"]
+    id: "Proc. Amer. Math. Soc. 100 (1987), 335–339"
+    type: paper
+    relationship: formalizes
+    author_endorsement: "not-contacted"
+    note: >-
+      the closed case: closed sets of Lebesgue measure < 1 admit an infinite independent (free)
+      set — targets erdos501_closed_infinite and erdos501_closed_size3 (Erdos501/Closed.lean)
+  - title: "Directed graphs over topological spaces: some set theoretical aspects"
+    authors: ["Stephen H. Hechler"]
+    id: "Israel J. Math. 11 (1972), 231–248"
+    type: paper
+    relationship: formalizes
+    author_endorsement: "n/a"
+    note: >-
+      the CH counterexample: under CH a family of bounded (countable, null) sets with no infinite
+      independent set — target erdos501_hechler_of_CH (Erdos501/Hechler.lean, from ℵ₁ = 𝔠) and,
+      inside the collapse extension where CH holds, the direction ¬ (ZFC ⊨ᵇ Erdos501)
+      (Flypitch4/Erdos501/Hechler.lean)
+  - title: "Erdős Problem 501 after adding ω₂ random reals (draft, revision 10)"
+    authors: ["Elliot Glazer", "Sol"]
+    id: "docs/paper/erdos501_random_profiles_rev10.pdf (unpublished draft, 2026-08-16)"
+    type: paper
+    relationship: adapts
+    author_endorsement: participated
+    note: >-
+      the positive answer after adding random reals: the ZFC core (Lemmas 2.1–2.2, Definition 3.1,
+      Theorem 3.2: a "profile certificate" yields an infinite independent set), the Δ-system and
+      homogeneous-reading arguments, and the fullness of the fresh profiles (Lemma 4.5) are
+      formalized as written; the formalized theorem uses the random algebra with 𝔠⁺ coordinates
+      over the ground universe (Δ-system for 𝔠⁺ countable sets, no CH in the ground) in place of
+      the paper's ω₂ random reals over a CH ground, and the sentence is transferred into the
+      Boolean-valued model by an internal-reals argument rather than by re-running the recursion
+      in a set model — direction ¬ (ZFC ⊨ᵇ ∼Erdos501) (Flypitch4/Erdos501/*)
+  - title: "Some remarks on set theory VIII"
+    authors: ["Paul Erdős", "András Hajnal"]
+    id: "Michigan Math. J. 7 (1960), 187–191"
+    type: paper
+    relationship: background
+    author_endorsement: "n/a"
+    note: "arbitrarily large finite independent sets exist in ZFC (context only; not formalized)"
+
+related_formalizations:
+  - id: "https://github.com/flypitch/flypitch"
+    relationship: builds-on
+    note: >-
+      Han–van Doorn, "A formal proof of the independence of the continuum hypothesis" (CPP 2020),
+      Lean 3: first-order logic, the theory ZFC, Boolean-valued models, forcing, the completeness
+      theorem and the collapse algebra Col(ω₁, 𝒫(ω)) with independence_of_CH.  The vendored
+      library Flypitch4/ is derived from it (see below); its axiomatization of ZFC is the one
+      mirrored, axiom by axiom, in the Mathlib-side theory of the Challenge
+  - id: "https://github.com/ianklatzco/flypitch"
+    relationship: builds-on
+    note: >-
+      Lean 4 port of Flypitch (Ian Klatzco with Claude; commit ad649f8, directory flypitch4/),
+      vendored here as Flypitch4/ and forward-ported to the pinned Mathlib, then extended with
+      measure algebras, the random algebra and the forcing development for #501
+      (Flypitch4/Erdos501/); see third_party/flypitch4/ and docs/PORTING-NOTES.md
+  - id: "https://github.com/google-deepmind/formal-conjectures"
+    relationship: other
+    note: >-
+      FormalConjectures/ErdosProblems/501.lean states the first question (answer(sorry)); the
+      Mathlib-level statements here (hypotheses, independence predicate) follow it verbatim, and
+      the faithfulness target erdos501_sentence_faithful ties the first-order sentence to that
+      proposition.  No code is shared; the relationship is "same statement shape"
+  - id: "https://github.com/leanprover-community/mathlib4"
+    relationship: builds-on
+    note: >-
+      Mathlib.ModelTheory (languages, bounded formulas, structures, Theory.ModelsBoundedFormula,
+      Löwenheim–Skolem via Theory.Model.isSatisfiable) is the vocabulary of the Challenge; Mathlib
+      measure theory, ZFSet and cardinals supply the rest of the trusted statements
+
+classification:
+  arxiv: [math.LO, math.CO]
+  msc2020: [03E35, 03E75, 03E40, 03E50, 05D10, 28A05]
+
+status:
+  scope: >-
+    Both questions of Erdős #501: the closed case (second question, infinite independent set,
+    hence size 3) and the independence of the first question from ZFC (Hechler's CH counterexample
+    at Mathlib level and in the collapse model; the positive answer after 𝔠⁺ random reals), plus
+    the faithfulness of the first-order rendering.  Complete: no proof-development sorry remains.
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: [propext, Classical.choice, Quot.sound]
+  main_results:
+    - declaration: "erdos501_closed_infinite"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: "comparator.json"
+    - declaration: "erdos501_closed_size3"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: "comparator.json"
+    - declaration: "erdos501_hechler_of_CH"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: "comparator.json"
+    - declaration: "erdos501_not_refutable"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: "comparator.json"
+    - declaration: "erdos501_not_provable"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: "comparator.json"
+    - declaration: "erdos501_independent"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: "comparator.json"
+    - declaration: "erdos501_sentence_faithful"
+      file: "Solution.lean"
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: "comparator.json"
+  # The same seven results, stated in the proof-theoretic terms of the vendored Flypitch
+  # development (independent ZFC Erdos501_f, i.e. ¬ (ZFC ⊢ₛ' Erdos501_f) ∧ ¬ (ZFC ⊢ₛ' ∼Erdos501_f)),
+  # form a second comparator challenge: ChallengeFlypitch.lean / SolutionFlypitch.lean /
+  # comparator-flypitch.json.  Its Challenge imports the vendored library and is therefore not
+  # Palomar-conformant; it is kept because Flypitch's derivability predicate is a stronger,
+  # syntactic form of the same result.
+
+automation:
+  methods:
+    - method: agent
+      models:
+        - "Claude (Anthropic); the final integration and the Mathlib ModelTheory bridge (Erdos501/FOL/, Challenge.lean, Solution.lean) were produced by claude-fable-5"
+      framework: "Claude (Anthropic) agent sessions — Claude Cowork / Claude Code"
+      tool_setup: >-
+        Agent sessions in a claude.ai project ("Formalizing Erdős 501"), each with a Lean 4 toolchain
+        and a Mathlib build; the sessions wrote all Lean code (the Mathlib-level proofs, the port of
+        the Flypitch library to the pinned Mathlib, the measure/random-algebra additions, the forcing
+        development for #501, and the bridge to Mathlib's first-order logic), ran lake, the axiom
+        audits and the comparator, and wrote the documentation.  Mathematical direction, the choice
+        of what to formalize, the paper being formalized (Glazer 2026) and the review of the
+        statements were the human author's.
+      cost:
+        wall_time: "August 2026, about a week of agent sessions"
+        spend_usd: "subscription-based usage"
+        hardware: "API-only (cloud sandboxes with a Lean toolchain)"
+      prompting_notes: >-
+        Task-level natural-language instructions (formalize unit F3, port the library, make the
+        Challenge Mathlib-only, …); the plans and audit notes are kept as project documents and, in
+        part, under docs/ (docs/PORTING-NOTES.md, docs/audits/, docs/PROVENANCE.md).
+    - method: manual
+      tool_setup: >-
+        Elliot Glazer: the mathematics (the paper docs/paper/erdos501_random_profiles_rev10.pdf,
+        the choice of route through Flypitch's Boolean-valued models, the axiomatization), review of
+        the trusted statements, repository administration.
+  spend_usd: "subscription-based usage"
+  notes: >-
+    Full disclosure: every line of Lean in this repository was written by AI agents (Claude) under
+    the direction of the human author; no line was written by hand.  Exact model identifiers for
+    the earlier sessions were not recorded in the repository.  The Lean 4 port of Flypitch that is
+    vendored (Flypitch4/) was itself produced with Claude by Ian Klatzco.  All proofs are checked
+    by Lean's kernel; the comparator (leanprover/comparator) accepts both challenge configurations
+    with the standard axioms only, and no declaration in the repository depends on sorryAx
+    (docs/audits/, docs/STATUS.md).
+
+fidelity:
+  divergences: >-
+    (1) Independence is proved for the first-order sentence Erdos501 ("every complete ordered
+    field has the Erdős property"), i.e. for the first question rendered inside ZFC; the target
+    erdos501_sentence_faithful certifies that in Mathlib's ZFSet this sentence is equivalent to the
+    Mathlib statement of the first question, so nothing weaker is being claimed.  Inside the
+    sentence, "outer measure < 1" is rendered as the existence of a cover by countably many open
+    intervals of total length < 1 (the definition of Lebesgue outer measure), "bounded" as bounded
+    above and below, "infinite" as "ω injects into X".  (2) The theory ZFC is Flypitch's
+    axiomatization (extensionality, empty set, ordered pairs, union, power set, infinity,
+    regularity, Zorn's lemma, strong collection), which is equivalent to the usual ZFC.  (3)
+    Independence is stated semantically (Mathlib has no proof calculus): ¬ (ZFC ⊨ᵇ φ) means that
+    some model of ZFC (with carrier in Type 0; by Löwenheim–Skolem this is no restriction)
+    satisfies ¬φ.  The underlying Flypitch results are the syntactic ¬ (ZFC ⊢ₛ' Erdos501_f) and
+    ¬ (ZFC ⊢ₛ' ∼Erdos501_f) (comparator-flypitch.json).  (4) The consistency of a positive answer
+    is obtained from the random algebra with 𝔠⁺ coordinates over the ground universe rather than
+    from ω₂ random reals over a model of CH as in the paper (the paper's two-step Col × Random
+    forcing is not used; the Δ-system lemma for 𝔠⁺ countable sets needs no CH).  (5) CH in
+    erdos501_hechler_of_CH is (ℵ₁ : Cardinal.{u}) = 𝔠.  (6) erdos501_closed_size3 states "size 3"
+    as 3 ≤ X.ncard (Set.ncard is 0 on infinite sets, so this is a finite independent set with at
+    least three elements); erdos501_closed_infinite gives the infinite one, without any
+    boundedness hypothesis.
+
+review:
+  status: agent-reviewed
+  reviewers:
+    - "Claude (Anthropic) audit sessions: statements of the seven targets against erdosproblems.com/501 and formal-conjectures (docs/audits/2026-08-16-audit-formal-conjectures-501-statements.md), the paper (docs/audits/2026-08-16-audit-rev10-profile-certificate.md), the vendored port (third_party/flypitch4/), and the forcing development (docs/audits/2026-08-17-erdos501-forcing-audit-355bc1e.txt)"
+    - "Elliot Glazer (review of the trusted statements and of the mathematics)"
+  notes: >-
+    No independent human peer review has been performed yet.  Mechanical checks: lake build of the
+    whole repository, #print axioms of every target and of the forcing tree (docs/audits/), and the
+    comparator on both configurations (docs/COMPARATOR.md), all at the pinned toolchain
+    (Lean v4.34.0-rc1, Mathlib 355bc1e0ed1d36e49525121e1a280ca13a058a92).
+
+alignment:
+  namespace: "Erdos501, Erdos501.FOL, Flypitch.Erdos501"
+  statements:
+    - source: "Newelski–Pawlikowski–Seredyński 1987, main theorem (closed sets of measure < 1 admit an infinite free set)"
+      lean: "erdos501_closed_infinite (Erdos501.erdos501_pairwise)"
+      module: "Solution.lean (Erdos501/Closed.lean)"
+      status: proved
+    - source: "Erdős #501, second question (independent set of size 3)"
+      lean: "erdos501_closed_size3 (Erdos501.erdos501_ncard_three)"
+      module: "Solution.lean (Erdos501/Closed.lean)"
+      status: proved
+    - source: "Hechler 1972 (CH counterexample)"
+      lean: "erdos501_hechler_of_CH (Erdos501.hechler_of_CH)"
+      module: "Solution.lean (Erdos501/Hechler.lean)"
+      status: proved
+    - source: "Glazer 2026, Theorem 1.1 (positive answer after adding random reals): consistency of a positive answer"
+      lean: "erdos501_not_refutable (Erdos501.FOL.erdos501_not_refutable ← Flypitch.Erdos501.neg_Erdos501_f_unprovable ← erdos501_of_random)"
+      module: "Solution.lean (Erdos501/FOL/Independence.lean, Flypitch4/Erdos501/Main.lean)"
+      status: proved
+    - source: "Hechler 1972 inside the collapse extension: consistency of a negative answer"
+      lean: "erdos501_not_provable (Erdos501.FOL.erdos501_not_provable ← Flypitch.Erdos501.Hechler.Erdos501_f_unprovable ← neg_erdos501_forced_collapse)"
+      module: "Solution.lean (Erdos501/FOL/Independence.lean, Flypitch4/Erdos501/Hechler.lean)"
+      status: proved
+    - source: "Independence of the first question from ZFC"
+      lean: "erdos501_independent"
+      module: "Solution.lean (Erdos501/FOL/Independence.lean)"
+      status: proved
+    - source: "Faithfulness of the first-order rendering (formal-conjectures statement)"
+      lean: "erdos501_sentence_faithful (Erdos501.FOL.realize_Erdos501_iff ← Flypitch.Erdos501.stdStructure_realize_Erdos501_f_iff)"
+      module: "Solution.lean (Erdos501/FOL/Sentence.lean, Flypitch4/Erdos501/Bridge.lean)"
+      status: proved
+
+acknowledgements: >-
+  Jesse Michael Han and Floris van Doorn (Flypitch); Ian Klatzco (Lean 4 port of Flypitch); the
+  Mathlib community; Google DeepMind's formal-conjectures for the statement shape; Thomas Bloom's
+  erdosproblems.com; the Lean FRO for the comparator.

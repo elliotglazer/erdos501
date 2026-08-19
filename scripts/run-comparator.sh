@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Judge this repository with the Lean comparator.
 #
-#   scripts/run-comparator.sh                 # the challenge (config.json, all seven targets)
+#   scripts/run-comparator.sh                          # comparator.json (Mathlib-only Challenge, seven targets)
+#   scripts/run-comparator.sh comparator-flypitch.json # the same results in Flypitch's terms
 #
 # Requires `landrun`, `lean4export` and `comparator` on PATH (see
 # scripts/install-comparator-tools.sh), or the COMPARATOR_LANDRUN /
@@ -13,7 +14,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-CONFIG="${1:-config.json}"
+CONFIG="${1:-comparator.json}"
 COMPARATOR_BIN="${COMPARATOR_BIN:-comparator}"
 
 # A pre-populated .lake (e.g. from `lake exe cache get` + `lake build`) is

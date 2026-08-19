@@ -4,25 +4,33 @@ Released under Apache 2.0 license as described in the file LICENSE.
 
 # Erdős Problem #501 — comparator solution
 
-The untrusted half of the comparator challenge: the statements of
-`Challenge.lean`, repeated verbatim, each proved by delegation to the
-`Erdos501` development.  Only the statements are compared by the comparator;
-this file may import anything.
+The untrusted half of the comparator challenge: the statements of `Challenge.lean` (Part B),
+repeated verbatim, each proved by delegation to the `Erdos501` development.  Only the statements
+are compared by the comparator; this file may import anything (it must not import `Challenge`).
 
-All seven targets are proved; `config.json` lists them all.
+The shared definitions of `Challenge.lean` (Part A: the language `L`, the theory `ZFC`, the
+sentence `Erdos501`, the structure `zfsetStructure`) are provided here by
+`Erdos501.FOL.Statement`, a verbatim copy kept in sync by `scripts/sync-statement.py`; the
+comparator checks that every constant occurring in the seven statements is the same declaration
+in both environments.
+
+All seven targets are proved; `comparator.json` lists them all.
 -/
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.SetTheory.Cardinal.Continuum
 import Mathlib.SetTheory.Cardinal.Aleph
 import Mathlib.Data.Set.Card
-import Flypitch4.Summary
+import Mathlib.ModelTheory.Satisfiability
+import Mathlib.SetTheory.ZFC.Basic
 import Erdos501
 
 open MeasureTheory
-open scoped Cardinal
-open Fol
+open scoped Cardinal FirstOrder
+open FirstOrder FirstOrder.Language
 
 universe u
+
+open Erdos501.FOL
 
 /-! ### Second question: closed sets of measure `< 1` -/
 
@@ -52,17 +60,19 @@ theorem erdos501_hechler_of_CH :
 
 /-! ### First question: independence from `ZFC` -/
 
-theorem erdos501_not_refutable :
-    ¬ (ZFC ⊢ₛ' (bd_not Flypitch.Erdos501.Erdos501_f : sentence L_ZFC)) :=
-  Erdos501.neg_erdos501_f_unprovable
+theorem erdos501_not_refutable : ¬ (ZFC ⊨ᵇ ∼Erdos501) :=
+  Erdos501.FOL.erdos501_not_refutable
 
-theorem erdos501_not_provable : ¬ (ZFC ⊢ₛ' Flypitch.Erdos501.Erdos501_f) :=
-  Erdos501.erdos501_f_unprovable
+theorem erdos501_not_provable : ¬ (ZFC ⊨ᵇ Erdos501) :=
+  Erdos501.FOL.erdos501_not_provable
 
-theorem erdos501_independent : independent ZFC Flypitch.Erdos501.Erdos501_f :=
-  Erdos501.erdos501_independent
+theorem erdos501_independent : ¬ (ZFC ⊨ᵇ Erdos501) ∧ ¬ (ZFC ⊨ᵇ ∼Erdos501) :=
+  Erdos501.FOL.erdos501_independent
 
 theorem erdos501_sentence_faithful :
-    Flypitch.Erdos501.stdStructure ⊨ₘ Flypitch.Erdos501.Erdos501_f ↔
-      Flypitch.Erdos501.erdos501_deepmind :=
-  Erdos501.erdos501_sentence_faithful
+    (ZFSet.{0} ⊨ Erdos501) ↔
+      ∀ (A : ℝ → Set ℝ),
+        (∀ x, Bornology.IsBounded (A x)) →
+        (∀ x, volume.toOuterMeasure (A x) < 1) →
+        ∃ X : Set ℝ, X.Infinite ∧ X.Pairwise (fun x y => x ∉ A y) :=
+  Erdos501.FOL.realize_Erdos501_iff

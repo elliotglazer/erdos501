@@ -2,114 +2,13 @@
 Copyright (c) 2026 Elliot Glazer. All rights reserved.
 Released under Apache 2.0 license as described in the file LICENSE.
 
-# Erdős Problem #501 — comparator challenge (trusted statements)
+# The statement definitions of `Challenge.lean` (verbatim copy)
 
-This file is the *trusted* half of a comparator challenge
-(https://github.com/leanprover/comparator): it states, with `sorry`, exactly
-what `Solution.lean` proves.  It imports **Mathlib only**.
-
-## The problem (erdosproblems.com/501)
-
-Erdős (1961), Erdős–Hajnal (1971, Problem 38): for every real `x` let `A x ⊆ ℝ`
-be a bounded set of Lebesgue outer measure `< 1`.
-
-* First question: must there be an infinite *independent* set, i.e. an infinite
-  `X ⊆ ℝ` with `x ∉ A y` for all distinct `x, y ∈ X`?
-* Second question: if the sets `A x` are closed and of measure `< 1`, must
-  there be an independent set of size `3`?
-
-The formal shape of the hypotheses follows `google-deepmind/formal-conjectures`
-(`FormalConjectures/ErdosProblems/501.lean`): `Bornology.IsBounded (A x)`,
-`volume.toOuterMeasure (A x) < 1` (definitionally `volume (A x)`, Lebesgue
-*outer* measure on an arbitrary set), independence `X.Pairwise (fun x y => x ∉ A y)`.
-
-## The seven targets
-
-1. `erdos501_closed_infinite` — second question, strong form (Newelski–
-   Pawlikowski–Seredyński 1987): closed sets of measure `< 1` admit an
-   *infinite* independent set.
-2. `erdos501_closed_size3` — second question as asked: an independent set of
-   size `3`.
-3. `erdos501_hechler_of_CH` — Hechler (1972): under `ℵ₁ = 𝔠` the first question
-   has a negative answer (a theorem of ZFC, stated at Mathlib level).
-4. `erdos501_not_refutable` — the first question is *consistent with ZFC*: `ZFC`
-   does not entail the negation of its first-order rendering `Erdos501`
-   (E. Glazer 2026: it holds after adding `𝔠⁺` random reals).
-5. `erdos501_not_provable` — its negation is consistent with ZFC: `ZFC` does not
-   entail `Erdos501` (Hechler's counterexample under CH, in the collapse
-   extension).
-6. `erdos501_independent` — 4 ∧ 5: `Erdos501` is *independent of ZFC*.
-7. `erdos501_sentence_faithful` — the rendering is faithful: in Mathlib's
-   `ZFSet`, `Erdos501` holds iff the Mathlib-level statement of the first
-   question holds.
-
-## How independence is stated (Mathlib's `ModelTheory`)
-
-`ZFC` is a first-order theory (`Erdos501.FOL.ZFC`) in the language
-`Erdos501.FOL.L` of set theory with the function symbols `∅`, `(·,·)`, `ω`, `𝒫`,
-`⋃` and the relation symbol `∈`, and `Erdos501` (`Erdos501.FOL.Erdos501`) is a
-sentence of that language.  Independence is stated *semantically*, with
-Mathlib's `Theory.ModelsBoundedFormula` (`⊨ᵇ`):
-`¬ (ZFC ⊨ᵇ Erdos501)` says that not every model of `ZFC` satisfies `Erdos501`,
-i.e. some model of `ZFC` satisfies its negation; `¬ (ZFC ⊨ᵇ ∼Erdos501)` says
-that some model satisfies `Erdos501`.  By Gödel's completeness theorem this is
-the same as: neither `Erdos501` nor `∼Erdos501` is provable from `ZFC`.
-(Mathlib has no proof calculus for first-order logic; the semantic form is the
-faithful Mathlib statement.  The proofs in `Solution.lean` come from
-Boolean-valued models via the completeness theorem of the Flypitch
-development, so they establish unprovability as well.)  `⊨ᵇ` quantifies over
-Mathlib's `ModelType`s of `ZFC` with carrier in `Type 0`; by the
-Löwenheim–Skolem theorem (Mathlib's `Theory.Model.isSatisfiable`) this is no
-restriction — a model in any universe yields one in `Type 0`.
-
-The axioms of `ZFC` are those of Han–van Doorn's Flypitch formalization of
-ZFC (the theory in which the independence of CH was verified): extensionality,
-empty set, ordered pairs (the pairing symbol is injective), union, power set,
-infinity (`ω` is the least inductive ordinal), regularity, Zorn's lemma, and the
-*strong collection* scheme.  This axiom system is equivalent to the usual
-ZFC (strong collection gives replacement, hence separation and pairing; Zorn's
-lemma is equivalent to choice); in particular every model of it is a model of
-ZFC, so independence from it is independence from ZFC.
-
-## Reading guide — what a referee has to check by hand
-
-Everything below Part A is a *definition*; the comparator guarantees only that
-`Solution.lean` proves *these* statements from the standard axioms.  What the
-statements mean is for the reader to check:
-
-* `L`, `Func`, `Rel` — the language;
-* the axioms `axiomOfEmptyset, …, zornsLemma`, `collectionAxiom` and the theory
-  `ZFC` — that this is (an axiomatization equivalent to) ZFC;
-* the sentence `Erdos501` — that it says "every complete ordered field has the
-  Erdős property" with the intended meaning of "bounded", "outer measure `< 1`",
-  "infinite" and "independent" (the docstrings of the combinators spell out the
-  rendering).  Target 7 reduces this audit to the audit of `zfsetStructure` and
-  of the Mathlib-level statement: in Mathlib's `ZFSet` the sentence is
-  *equivalent* to the `formal-conjectures` proposition;
-* `zfsetStructure` — the standard interpretation of the symbols in `ZFSet`
-  (`∅`, `ZFSet.omega`, `ZFSet.powerset`, `ZFSet.sUnion`, Kuratowski `ZFSet.pair`, `∈`).
-
-Formulas are written with de Bruijn *levels* through the depth-polymorphic
-combinators of Part A (`allF fun x => …` binds a variable and passes its level
-to the body); the only place where explicit variable arithmetic occurs is
-`collectionAxiom`, whose docstring lists the levels of every variable.
-
-## Limitations and conventions
-
-* Independence is proved for the sentence `Erdos501`, i.e. for the first
-  question rendered inside first-order ZFC ("every complete ordered field has
-  the Erdős property"); target 7 certifies that this rendering is equivalent,
-  in `ZFSet`, to the Mathlib statement.
-* `erdos501_hechler_of_CH` takes the continuum hypothesis as `(ℵ₁ : Cardinal.{u}) = 𝔠`.
-* `erdos501_closed_size3` states "an independent set of size 3" as
-  `3 ≤ X.ncard`; `Set.ncard` is `0` on infinite sets, so this asserts a *finite*
-  independent set with at least three elements.  `erdos501_closed_infinite`
-  gives the infinite one.
-* Outer measure `< 1` is rendered, inside the sentence, as the existence of a
-  cover by countably many open intervals of total length `< 1` — the definition
-  of Lebesgue outer measure; boundedness as "bounded above and below";
-  "infinite" as "`ω` injects into `X`" (equivalent to "not finite" under
-  choice, which `ZFC` includes as Zorn's lemma).
+GENERATED FILE — do not edit.  This is Part A of `Challenge.lean` (the language `L`, the theory
+`ZFC`, the sentence `Erdos501` and the `L`-structure on `ZFSet`), reproduced verbatim by
+`scripts/sync-statement.py` so that the Solution — which must not import the Challenge — can
+prove statements about *literally* the same constants.  The comparator checks that the two copies
+define identical declarations; `scripts/sync-statement.py --check` (run in CI) checks the text.
 -/
 import Mathlib.MeasureTheory.Measure.Lebesgue.Basic
 import Mathlib.SetTheory.Cardinal.Continuum
@@ -121,14 +20,6 @@ import Mathlib.SetTheory.ZFC.Basic
 open MeasureTheory
 open scoped Cardinal FirstOrder
 open FirstOrder FirstOrder.Language
-
-universe u
-
-/-! ## Part A — the language, the theory `ZFC` and the sentence `Erdos501`
-
-Everything in this part is a *definition* (no proofs); it is repeated verbatim in
-`Erdos501/FOL/Statement.lean` so that the comparator can check that the
-statements proved in `Solution.lean` are literally these. -/
 
 namespace Erdos501.FOL
 
@@ -544,76 +435,3 @@ noncomputable instance zfsetStructure : L.Structure ZFSet.{0} where
     | _, Rel.mem, xs => xs 0 ∈ xs 1
 
 end Erdos501.FOL
-
-/-! ## Part B — the statements -/
-
-open Erdos501.FOL
-
-/-! ### Second question: closed sets of measure `< 1` -/
-
-/-- Newelski–Pawlikowski–Seredyński (Proc. AMS 100 (1987) 335–339): if every
-`A x` is closed of Lebesgue measure `< 1` then there is an infinite independent
-set.  (No boundedness hypothesis is needed.) -/
-theorem erdos501_closed_infinite :
-    ∀ (A : ℝ → Set ℝ),
-      (∀ x, IsClosed (A x)) →
-      (∀ x, volume (A x) < 1) →
-      ∃ X : Set ℝ, X.Infinite ∧ X.Pairwise (fun x y => x ∉ A y) := by
-  sorry
-
-/-- The second question of #501 as asked: an independent set of size `3`
-(`Set.ncard` is `0` on infinite sets, so this forces a finite independent set
-with at least three elements). -/
-theorem erdos501_closed_size3 :
-    ∀ (A : ℝ → Set ℝ),
-      (∀ x, IsClosed (A x)) →
-      (∀ x, volume (A x) < 1) →
-      ∃ X : Set ℝ, 3 ≤ X.ncard ∧ X.Pairwise (fun x y => x ∉ A y) := by
-  sorry
-
-/-! ### First question: Hechler's counterexample under `CH` -/
-
-/-- Hechler (Israel J. Math. 11 (1972) 231–248): if `ℵ₁ = 𝔠` then there is a
-family of bounded sets of outer measure `< 1` (indeed countable, null sets)
-with no infinite independent set.  This is a theorem of ZFC, so it holds in
-Lean outright; the hypothesis `CH` is a genuine hypothesis of the theorem. -/
-theorem erdos501_hechler_of_CH :
-    ((ℵ₁ : Cardinal.{u}) = 𝔠) →
-    ∃ (A : ℝ → Set ℝ),
-      (∀ x, Bornology.IsBounded (A x)) ∧
-      (∀ x, volume.toOuterMeasure (A x) < 1) ∧
-      ¬ ∃ X : Set ℝ, X.Infinite ∧ X.Pairwise (fun x y => x ∉ A y) := by
-  sorry
-
-/-! ### First question: independence from `ZFC` -/
-
-/-- **A positive answer is consistent with ZFC**: `ZFC` does not entail the negation
-of `Erdos501` — some model of `ZFC` satisfies `Erdos501` (E. Glazer, 2026: it holds
-after adding `𝔠⁺` random reals; formalized through the Boolean-valued model of the
-random algebra and the completeness theorem). -/
-theorem erdos501_not_refutable : ¬ (ZFC ⊨ᵇ ∼Erdos501) := by
-  sorry
-
-/-- **A negative answer is consistent with ZFC**: `ZFC` does not entail `Erdos501` —
-some model of `ZFC` satisfies its negation (Hechler's counterexample under `CH`,
-formalized through the Boolean-valued model of the collapse algebra
-`Col(ω₁, 𝒫(ω))`, where `CH` holds). -/
-theorem erdos501_not_provable : ¬ (ZFC ⊨ᵇ Erdos501) := by
-  sorry
-
-/-- **The first question of Erdős #501 is independent of ZFC**: neither `Erdos501`
-nor its negation is a consequence of `ZFC`. -/
-theorem erdos501_independent : ¬ (ZFC ⊨ᵇ Erdos501) ∧ ¬ (ZFC ⊨ᵇ ∼Erdos501) := by
-  sorry
-
-/-- **Faithfulness of the rendering**: in Mathlib's `ZFSet` (with the standard
-interpretation of `∅, ω, 𝒫, ⋃, (·,·), ∈`), the sentence `Erdos501` holds iff the
-Mathlib-level statement of the first question — verbatim the proposition of
-`formal-conjectures`' `erdos_501` — holds. -/
-theorem erdos501_sentence_faithful :
-    (ZFSet.{0} ⊨ Erdos501) ↔
-      ∀ (A : ℝ → Set ℝ),
-        (∀ x, Bornology.IsBounded (A x)) →
-        (∀ x, volume.toOuterMeasure (A x) < 1) →
-        ∃ X : Set ℝ, X.Infinite ∧ X.Pairwise (fun x y => x ∉ A y) := by
-  sorry
